@@ -37,5 +37,5 @@ dependencies {
     implementation "curse.maven:notenoughitems-gtnh-358228:4799391-deobf-sources-api"
     implementation "curse.maven:codechickencore-unofficial-746279:4378043-deobf-sources-api"
     implementation "curse.maven:codechickenlib-unofficial-746280:4388255-deobf-sources-api"
-    transformedMod("com.github.GTNewHorizons:waila:1.8:dev")
+    implementation "curse.maven:waila-73488:2230518-deobf-sources-api"
 }
