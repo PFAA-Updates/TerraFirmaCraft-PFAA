@@ -1,0 +1,21 @@
+{
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "terrafirmacraft",
+    "name": "Terra Firma Craft",
+    "description": "Survival Mode as it should have been.",
+    "version": "0.79.30.925",
+    "mcversion": "1.7.10",
+    "url" : "http://terrafirmacraft.com/change_log.html",
+    "updateUrl": "http://terrafirmacraft.com/download.html",
+    "authorList": [ "Bioxx", "Dunkleosteus", "Kittychanley" ],
+    "credits": "http://terrafirmacraft.com/credits.html",
+    "logoFile": "/assets/textures/gui/TFCLogo.png",
+    "screenshots": [  ],
+    "parent": "",
+    "requiredMods": [  ],
+    "dependencies": ["Forge@[10.13.4.1448,)"],
+    "dependants": [  ],
+    "useDependencyInformation": "true"
+  }]
+}
