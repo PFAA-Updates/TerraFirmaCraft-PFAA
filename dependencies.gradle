@@ -34,10 +34,8 @@
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-    runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.5.4-GTNH:dev")
-    classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev"
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.3.127:dev"
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.4.95:dev"
-    compile "mcp.mobius.waila:Waila:1.5.11-RC2-NONEI_1.7.10"
+    implementation "curse.maven:notenoughitems-gtnh-358228:4799391-deobf-sources-api"
+    implementation "curse.maven:codechickencore-unofficial-746279:4378043-deobf-sources-api"
+    implementation "curse.maven:codechickenlib-unofficial-746280:4388255-deobf-sources-api"
+    transformedMod("com.github.GTNewHorizons:waila:1.8:dev")
 }
