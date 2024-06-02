@@ -1,8 +1,8 @@
 {
   "modListVersion": 2,
   "modList": [{
-    "modid": "terrafirmacraft",
-    "name": "TerraFirmaCraft",
+    "modid": "${modId}",
+    "name": "${modName}",
     "description": "Survival Mode as it should have been.",
     "version": "${mod_version}",
     "mcversion": "${minecraft_version}",

@@ -1,0 +1,21 @@
+// Add any additional repositories for your dependencies here.
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "Minecraft Forge"
+        url = "http://files.minecraftforge.net/maven"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+    maven { // The repo from which to get waila
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven { // the repo from which to get NEI and stuff
+        name 'CB Repo'
+        url "http://chickenbones.net/maven/"
+    }
+}
