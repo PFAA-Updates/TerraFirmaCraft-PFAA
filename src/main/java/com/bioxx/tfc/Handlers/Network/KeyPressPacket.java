@@ -1,5 +1,9 @@
 package com.bioxx.tfc.Handlers.Network;
 
+import com.bioxx.tfc.Items.Tools.ItemChisel;
+import com.bioxx.tfc.Items.Tools.ItemCustomHoe;
+import com.bioxx.tfc.Items.Tools.ItemProPick;
+import com.bioxx.tfc.TerraFirmaCraft;
 import net.minecraft.entity.player.EntityPlayer;
 
 import com.bioxx.tfc.Core.Player.PlayerManagerTFC;
@@ -37,10 +41,13 @@ public class KeyPressPacket extends AbstractPacket {
         if (keyTimer + 1 < TFC_Time.getTotalTicks()) {
             keyTimer = TFC_Time.getTotalTicks();
             // Set the ChiselMode on the server.
-            PlayerManagerTFC.getInstance()
-                .getPlayerInfoFromPlayer(player)
-                .setChiselMode((byte) type);
+            if (player.getCurrentEquippedItem().getItem() instanceof ItemChisel) {
+                PlayerManagerTFC.getInstance()
+                    .getPlayerInfoFromPlayer(player)
+                    .setChiselMode((byte) type);
+            } else if (player.getCurrentEquippedItem().getItem() instanceof ItemProPick pick) {
+                pick.switchMode(player);
+            }
         }
     }
-
 }

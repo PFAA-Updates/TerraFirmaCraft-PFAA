@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
@@ -64,8 +65,9 @@ public class ItemProPick extends ItemTerra {
         else return getIconFromDamageForRenderPass(stack.getItemDamage(), pass);
     }
 
-    public void switchMode(ItemStack itemstack) {
-        int mode = getMode(itemstack);
+    public void switchMode(EntityPlayer player) {
+        ItemStack itemStack = player.getCurrentEquippedItem();
+        int mode = getMode(itemStack);
         int maxMode = switch (this.getUnlocalizedName()) {
             case "item.Bronze ProPick", "item.Black Bronze ProPick", "item.Bismuth Bronze ProPick" -> 2;
             case "item.Wrought Iron ProPick" -> 3;
@@ -78,33 +80,27 @@ public class ItemProPick extends ItemTerra {
         if (mode > maxMode) {
             mode = 1;
         }
-        NBTTagCompound nbt = itemstack.getTagCompound();
+        NBTTagCompound nbt = itemStack.getTagCompound();
         nbt.setInteger("prospect_mode", mode);
-        itemstack.setTagCompound(nbt);
+        if (player.getEntityWorld().isRemote) { // TODO: Use an icon instead of a chat message.
+            TFC_Core.sendInfoMessage(
+                player,
+                new ChatComponentText("Prospectors pick radius now: "
+                    + getProspectingRadius(player.getCurrentEquippedItem()))
+            );
+        }
     }
 
     private int getMode(ItemStack itemStack) {
         NBTTagCompound nbt = itemStack.getTagCompound();
-        System.out.println(nbt);
         if (nbt == null) {
             nbt = new NBTTagCompound();
             itemStack.setTagCompound(nbt);
         }
         if (!nbt.hasKey("prospect_mode")) {
-            System.out.println("Setting prospect mode to 3 for " + itemStack);
             nbt.setInteger("prospect_mode", 3);
-            itemStack.setTagCompound(nbt);
         }
         return nbt.getInteger("prospect_mode");
-//        if (!itemStack.hasTag()) {
-//            itemStack.setTagCompound(new NBTTagCompound());
-//        }
-//        NBTTagCompound compound = itemStack.getTagCompound();
-//        if (compound.getInteger("prospect_mode") == 0) {
-//            compound.setInteger("prospect_mode", 1);
-//        }
-//        System.out.println("prospect_mode: " + compound.getInteger("prospect_mode"));
-//        return compound.getInteger("prospect_mode");
     }
 
     private int getProspectingRadius(ItemStack itemStack) {

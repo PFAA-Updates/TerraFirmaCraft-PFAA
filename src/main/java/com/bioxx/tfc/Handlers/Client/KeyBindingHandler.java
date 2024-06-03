@@ -44,8 +44,7 @@ public class KeyBindingHandler {
                     .getItem() instanceof ItemChisel) {
                     pi.switchChiselMode();
 
-                    // Let's send the actual ChiselMode so the server/client does not
-                    // come out of sync.
+                    // Sync chisel mode with server
                     AbstractPacket pkt = new KeyPressPacket(pi.chiselMode);
                     TerraFirmaCraft.PACKET_PIPELINE.sendToServer(pkt);
                 } else if (player.getCurrentEquippedItem()
@@ -53,8 +52,11 @@ public class KeyBindingHandler {
                         pi.switchHoeMode(player);
                 } else if (player.getCurrentEquippedItem()
                     .getItem() instanceof ItemProPick pick) {
+                    pick.switchMode(player);
 
-                    pick.switchMode(player.getCurrentEquippedItem());
+                    // Sync prospectors pick mode with server
+                    AbstractPacket pkt = new KeyPressPacket(pi.chiselMode);
+                    TerraFirmaCraft.PACKET_PIPELINE.sendToServer(pkt);
                 }
             } else if (keyLockTool.isPressed() && pi != null) {
                 if (pi.lockX == -9999999) {
