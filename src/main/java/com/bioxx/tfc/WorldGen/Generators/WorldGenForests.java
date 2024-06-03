@@ -46,9 +46,9 @@ public class WorldGenForests implements IWorldGenerator {
             rainfall = TFC_Climate.getRainfall(world, chunkX, 0, chunkZ);
             evt = TFC_Climate.getCacheManager(world)
                 .getEVTLayerAt(chunkX + 8, chunkZ + 8).floatdata1;
-            treeType0 = TFC_Climate.getTreeLayer(world, chunkX, Global.SEALEVEL, chunkZ, 0);
-            treeType1 = TFC_Climate.getTreeLayer(world, chunkX, Global.SEALEVEL, chunkZ, 1);
-            treeType2 = TFC_Climate.getTreeLayer(world, chunkX, Global.SEALEVEL, chunkZ, 2);
+            treeType0 = TFC_Climate.getTreeLayer(world, chunkX, Global.SEA_LEVEL, chunkZ, 0);
+            treeType1 = TFC_Climate.getTreeLayer(world, chunkX, Global.SEA_LEVEL, chunkZ, 1);
+            treeType2 = TFC_Climate.getTreeLayer(world, chunkX, Global.SEA_LEVEL, chunkZ, 2);
 
             gen0 = TFCBiome.getTreeGen(treeType0, random.nextBoolean());
             gen1 = TFCBiome.getTreeGen(treeType1, random.nextBoolean());
@@ -63,7 +63,7 @@ public class WorldGenForests implements IWorldGenerator {
 
     private void generateForest(Random random, int chunkX, int chunkZ, World world) {
         int xCoord = chunkX;
-        int yCoord = Global.SEALEVEL + 1;
+        int yCoord = Global.SEA_LEVEL + 1;
         int zCoord = chunkZ;
 
         int numTreesBase = 8;
@@ -143,7 +143,7 @@ public class WorldGenForests implements IWorldGenerator {
     public boolean generateJungle(Random random, int chunkX, int chunkZ, World world) {
         boolean completed = false;
         int xCoord = chunkX;
-        int yCoord = Global.SEALEVEL + 1;
+        int yCoord = Global.SEA_LEVEL + 1;
         int zCoord = chunkZ;
         /*
          * int numTreesBase = 5;

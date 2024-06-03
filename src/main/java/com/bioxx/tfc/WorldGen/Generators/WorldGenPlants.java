@@ -101,7 +101,7 @@ public class WorldGenPlants implements IWorldGenerator {
             flowerChunkRarity -= 5;
             mushroomsPerChunk += 1;
         }
-        bioTemperature = TFC_Climate.getBioTemperatureHeight(world, chunkX, Global.SEALEVEL, chunkZ);
+        bioTemperature = TFC_Climate.getBioTemperatureHeight(world, chunkX, Global.SEA_LEVEL, chunkZ);
         if (bioTemperature < 10) {
             grassPerChunk /= 2;
         }

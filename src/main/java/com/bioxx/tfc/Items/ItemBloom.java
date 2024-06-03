@@ -49,7 +49,7 @@ public class ItemBloom extends ItemTerra implements ISmeltable {
     public Metal getMetalType(ItemStack is) {
         if (this == TFCItems.rawBloom) return Global.UNKNOWN;
 
-        return Global.WROUGHTIRON;
+        return Global.WROUGHT_IRON;
     }
 
     @Override

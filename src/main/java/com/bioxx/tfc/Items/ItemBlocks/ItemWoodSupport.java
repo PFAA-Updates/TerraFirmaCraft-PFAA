@@ -19,7 +19,7 @@ public class ItemWoodSupport extends ItemTerraBlock {
         this.hasSubtypes = true;
         this.setMaxDamage(0);
         this.metaNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, 0, metaNames, 0, 16);
+        System.arraycopy(Global.WOOD_NAMES, 0, metaNames, 0, 16);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class ItemSapling extends ItemTerraBlock {
     public ItemSapling(Block b) {
         super(b);
         this.metaNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, 0, this.metaNames, 0, 16);
+        System.arraycopy(Global.WOOD_NAMES, 0, this.metaNames, 0, 16);
         this.icons = new IIcon[metaNames.length];
     }
 

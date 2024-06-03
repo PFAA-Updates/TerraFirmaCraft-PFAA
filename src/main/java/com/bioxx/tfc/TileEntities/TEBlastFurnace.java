@@ -445,7 +445,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
                      * of items in the fire.
                      */
                     else if (TFC_ItemHeat.isCookable(itemstack) != -1 && isOre || !isOre && item instanceof ISmeltable
-                        && ((ISmeltable) item).getMetalType(itemstack) == Global.PIGIRON
+                        && ((ISmeltable) item).getMetalType(itemstack) == Global.PIG_IRON
                         && index != null) {
                             int c = itemstack.stackSize;
                             int nonConsumedOre = 0;

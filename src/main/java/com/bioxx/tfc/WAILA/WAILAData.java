@@ -424,14 +424,14 @@ public class WAILAData implements IWailaDataProvider {
             return itemstack;
         } else if (accessor.getBlock() == TFCBlocks.ore2) // Minerals
         {
-            itemstack = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL.length);
+            itemstack = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL_NAMES.length);
             if (meta == 5) itemstack = new ItemStack(TFCItems.gemDiamond); // Kaolinite
             else if (meta == 13) itemstack = new ItemStack(TFCItems.powder, 1, 4); // Saltpeter
 
             return itemstack;
         } else if (accessor.getBlock() == TFCBlocks.ore3) // Minerals
         {
-            itemstack = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL.length + Global.ORE_MINERAL.length);
+            itemstack = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length);
             return itemstack;
         }
 

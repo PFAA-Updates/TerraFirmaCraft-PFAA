@@ -11,8 +11,8 @@ public class BlockPlanks2 extends BlockPlanks {
     public BlockPlanks2(Material material) {
         super(Material.wood);
         this.setCreativeTab(TFCTabs.TFC_BUILDING);
-        woodNames = new String[Global.WOOD_ALL.length - 16];
-        System.arraycopy(Global.WOOD_ALL, 16, woodNames, 0, Global.WOOD_ALL.length - 16);
+        woodNames = new String[Global.WOOD_NAMES.length - 16];
+        System.arraycopy(Global.WOOD_NAMES, 16, woodNames, 0, Global.WOOD_NAMES.length - 16);
         icons = new IIcon[woodNames.length];
     }
 }

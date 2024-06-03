@@ -39,7 +39,7 @@ public class BlockStand extends BlockTerraContainer implements IMultipleBlock, I
         this.setCreativeTab(TFCTabs.TFC_DECORATION);
         this.setBlockBounds(0.125f, 0, 0.125f, 0.875f, 1, 0.875f);
         woodNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, 0, woodNames, 0, 16);
+        System.arraycopy(Global.WOOD_NAMES, 0, woodNames, 0, 16);
     }
 
     @Override

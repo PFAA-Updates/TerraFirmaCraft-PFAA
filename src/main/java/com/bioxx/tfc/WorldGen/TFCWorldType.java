@@ -59,12 +59,12 @@ public class TFCWorldType extends WorldType {
 
     @Override
     public int getMinimumSpawnHeight(World world) {
-        return Global.SEALEVEL + 1;
+        return Global.SEA_LEVEL + 1;
     }
 
     @Override
     public double getHorizon(World world) {
-        return Global.SEALEVEL;
+        return Global.SEA_LEVEL;
     }
 
 }

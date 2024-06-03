@@ -11,7 +11,7 @@ public class BlockIgInSmooth extends BlockSmooth {
     public BlockIgInSmooth() {
         super(Material.rock);
         this.setCreativeTab(TFCTabs.TFC_BUILDING);
-        names = Global.STONE_IGIN;
+        names = Global.STONE_IGNEOUS_INTRUSIVE;
         icons = new IIcon[names.length];
     }
 }

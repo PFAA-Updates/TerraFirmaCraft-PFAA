@@ -39,7 +39,7 @@ public class BlockCustomDoor extends BlockTerra {
         "Willow Door Lower", "Willow Door Upper", "Kapok Door Lower", "Kapok Door Upper", "Acacia Door Lower",
         "Acacia Door Upper" };
 
-    private IIcon[] icons = new IIcon[Global.WOOD_ALL.length * 2];
+    private IIcon[] icons = new IIcon[Global.WOOD_NAMES.length * 2];
 
     public BlockCustomDoor(int woodId) {
         super(Material.wood);

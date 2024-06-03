@@ -11,9 +11,9 @@ public class BlockIgIn extends BlockStone {
     public BlockIgIn(Material material) {
         super(material);
         this.dropBlock = TFCBlocks.stoneIgInCobble;
-        names = Global.STONE_IGIN;
+        names = Global.STONE_IGNEOUS_INTRUSIVE;
         icons = new IIcon[names.length];
-        looseStart = Global.STONE_IGIN_START;
+        looseStart = Global.STONE_IGNEOUS_INTRUSIVE_START;
         gemChance = 2;
     }
 }

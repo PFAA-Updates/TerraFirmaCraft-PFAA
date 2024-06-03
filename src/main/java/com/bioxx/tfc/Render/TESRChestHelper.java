@@ -16,10 +16,10 @@ public class TESRChestHelper {
     private TEChest[] chestTypes;
 
     public TESRChestHelper() {
-        chestTypes = new TEChest[Global.WOOD_ALL.length * 2];
-        for (int i = 0; i < Global.WOOD_ALL.length; i++) {
+        chestTypes = new TEChest[Global.WOOD_NAMES.length * 2];
+        for (int i = 0; i < Global.WOOD_NAMES.length; i++) {
             chestTypes[i] = new TEChest(i, false);
-            chestTypes[Global.WOOD_ALL.length + i] = new TEChest(i, true);
+            chestTypes[Global.WOOD_NAMES.length + i] = new TEChest(i, true);
         }
     }
 

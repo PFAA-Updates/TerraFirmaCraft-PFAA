@@ -34,7 +34,7 @@ public class BlockTFCFence extends BlockFence {
     public BlockTFCFence(String str, Material mat) {
         super(str, mat);
         woodNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, 0, woodNames, 0, 16);
+        System.arraycopy(Global.WOOD_NAMES, 0, woodNames, 0, 16);
         iconsPost = new IIcon[woodNames.length];
         iconsPostTop = new IIcon[woodNames.length];
         this.setCreativeTab(TFCTabs.TFC_DECORATION);

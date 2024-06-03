@@ -88,13 +88,13 @@ public class ItemOilLamp extends ItemTerraBlock implements ISmeltable, IFluidCon
             case 1:
                 return Global.PLATINUM;
             case 2:
-                return Global.ROSEGOLD;
+                return Global.ROSE_GOLD;
             case 3:
                 return Global.SILVER;
             case 4:
-                return Global.STERLINGSILVER;
+                return Global.STERLING_SILVER;
             case 5:
-                return Global.BLUESTEEL;
+                return Global.BLUE_STEEL;
             default:
                 return Global.UNKNOWN;
         }

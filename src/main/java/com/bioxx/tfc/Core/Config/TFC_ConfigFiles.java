@@ -506,7 +506,8 @@ public class TFC_ConfigFiles {
             "enableNEIHiding",
             GENERAL,
             enableNEIHiding,
-            "Set to false to show hidden items in NEI. Note that most of these items were hidden to prevent players from cheating them in and crashing their game.");
+            "Set to false to show hidden items in NEI. Note that most of these items were hidden to prevent players from cheating them in and crashing their game.",
+            "config.gui.TFCConfig.general.enableNEIHiding");
         enablePowderKegs = generalConfig.getBoolean(
             "enablePowderKegs",
             GENERAL,
@@ -592,6 +593,7 @@ public class TFC_ConfigFiles {
             TerraFirmaCraft.LOG.warn("Invalid yearLength in the config file. Changing to the next multiple of 12.");
             yearLength = 12 + (12 * (yearLength / 12)); // Extra validation, because we need multiples of 12. Rounds up
                                                         // so it can never be 0.
+            if (yearLength < 96) { yearLength = 96; }
             prop.set(yearLength);
         }
         pitKilnBurnTime = generalConfig.getFloat(
@@ -908,14 +910,13 @@ public class TFC_ConfigFiles {
             "The overworked cap for a sluice scanning one soil unit in a specific chunk. Both filling a gold pan or using a sluice in the chunk count towards this value",
             "config.gui.TFCConfig.overworked.sluiceLimit");
 
-        if (!generalConfig.hasCategory(COLORS)) // Migrate old colors to there new homes
-        {
-            for (String catName : COLOR_CATEGORIES) {
-                ConfigCategory cat = generalConfig.getCategory(catName);
-                for (String propName : ImmutableSet.copyOf(cat.keySet())) {
-                    generalConfig.moveProperty(catName, propName, COLORS + '.' + catName);
+        if (!generalConfig.hasCategory(COLORS)) { // Migrate old colors to their new homes
+            for (String categoryName : COLOR_CATEGORIES) {
+                ConfigCategory category = generalConfig.getCategory(categoryName);
+                for (String propertyName : ImmutableSet.copyOf(category.keySet())) {
+                    generalConfig.moveProperty(categoryName, propertyName, COLORS + '.' + categoryName);
                 }
-                generalConfig.removeCategory(cat);
+                generalConfig.removeCategory(category);
             }
         }
 
@@ -930,7 +931,8 @@ public class TFC_ConfigFiles {
         getColor(generalConfig, ANVIL_RULE_COLOR2, anvilRuleColor2, "config.gui.TFCConfig.colors.anvil.2");
 
         // noinspection deprecation
-        Global.foodDecayRate = foodDecayRate; // keep deprecated value up to date
+        // TODO: make sure this does not break mod compatibility.
+        //Global.foodDecayRate = foodDecayRate; // keep deprecated value up to date
 
         if (generalConfig.hasChanged()) generalConfig.save();
     }

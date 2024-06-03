@@ -18,11 +18,11 @@ public class ItemAnvil2 extends ItemAnvil {
         int meta = is.getItemDamage();
         switch (meta) {
             case 0:
-                return Global.ROSEGOLD;
+                return Global.ROSE_GOLD;
             case 1:
-                return Global.BISMUTHBRONZE;
+                return Global.BISMUTH_BRONZE;
             case 2:
-                return Global.BLACKBRONZE;
+                return Global.BLACK_BRONZE;
             default:
                 return Global.UNKNOWN;
         }

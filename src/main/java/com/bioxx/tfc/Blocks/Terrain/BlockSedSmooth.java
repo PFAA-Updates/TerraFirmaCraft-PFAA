@@ -11,7 +11,7 @@ public class BlockSedSmooth extends BlockSmooth {
     public BlockSedSmooth() {
         super(Material.rock);
         this.setCreativeTab(TFCTabs.TFC_BUILDING);
-        names = Global.STONE_SED;
+        names = Global.STONE_SEDIMENTARY;
         icons = new IIcon[names.length];
     }
 }

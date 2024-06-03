@@ -24,8 +24,8 @@ public class BlockLogHoriz extends BlockLogVert {
         super();
         offset = off;
         woodNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, off, woodNames, 0, 8);
-        System.arraycopy(Global.WOOD_ALL, off, woodNames, 8, 8);
+        System.arraycopy(Global.WOOD_NAMES, off, woodNames, 0, 8);
+        System.arraycopy(Global.WOOD_NAMES, off, woodNames, 8, 8);
     }
 
     @Override

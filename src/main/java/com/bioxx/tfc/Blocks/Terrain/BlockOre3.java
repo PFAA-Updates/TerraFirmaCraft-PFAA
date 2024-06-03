@@ -17,12 +17,12 @@ public class BlockOre3 extends BlockOre {
 
     public BlockOre3(Material material) {
         super(material);
-        blockNames = Global.ORE_MINERAL2;
+        blockNames = Global.ORE_MINERAL2_NAMES;
     }
 
     @Override
     public int damageDropped(int dmg) {
-        return dmg + Global.ORE_METAL.length + Global.ORE_MINERAL.length;
+        return dmg + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length;
     }
 
     @Override

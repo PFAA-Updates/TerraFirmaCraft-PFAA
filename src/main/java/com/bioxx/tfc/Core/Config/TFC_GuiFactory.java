@@ -10,9 +10,7 @@ import cpw.mods.fml.client.IModGuiFactory;
 public class TFC_GuiFactory implements IModGuiFactory {
 
     @Override
-    public void initialize(Minecraft minecraftInstance) {
-        // Intentionally Empty
-    }
+    public void initialize(Minecraft minecraftInstance) { }
 
     @Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {

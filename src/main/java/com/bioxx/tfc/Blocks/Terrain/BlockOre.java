@@ -30,7 +30,7 @@ import com.bioxx.tfc.api.TFCOptions;
 
 public class BlockOre extends BlockCollapsible {
 
-    public String[] blockNames = Global.ORE_METAL;
+    public String[] blockNames = Global.ORE_METAL_NAMES;
 
     public BlockOre(Material mat) {
         super(mat);

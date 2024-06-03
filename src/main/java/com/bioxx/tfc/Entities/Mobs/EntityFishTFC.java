@@ -65,7 +65,7 @@ public class EntityFishTFC extends EntitySquid {
      */
     @Override
     public boolean getCanSpawnHere() {
-        return this.posY > Global.SEALEVEL - 16 && this.posY <= Global.SEALEVEL
+        return this.posY > Global.SEA_LEVEL - 16 && this.posY <= Global.SEA_LEVEL
             && this.worldObj.checkNoEntityCollision(this.boundingBox);
     }
 

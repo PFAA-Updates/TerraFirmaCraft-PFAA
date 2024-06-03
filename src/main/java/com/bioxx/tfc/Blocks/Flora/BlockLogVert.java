@@ -29,7 +29,7 @@ public class BlockLogVert extends BlockTerra {
     public BlockLogVert() {
         super(Material.wood);
         woodNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, 0, woodNames, 0, 16);
+        System.arraycopy(Global.WOOD_NAMES, 0, woodNames, 0, 16);
     }
 
     @Override

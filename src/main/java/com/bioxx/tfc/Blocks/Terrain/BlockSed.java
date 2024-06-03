@@ -11,9 +11,9 @@ public class BlockSed extends BlockStone {
     public BlockSed(Material material) {
         super(material);
         this.dropBlock = TFCBlocks.stoneSedCobble;
-        names = Global.STONE_SED;
+        names = Global.STONE_SEDIMENTARY;
         icons = new IIcon[names.length];
-        looseStart = Global.STONE_SED_START;
+        looseStart = Global.STONE_SEDIMENTARY_START;
         gemChance = 1;
     }
 }

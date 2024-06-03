@@ -20,7 +20,7 @@ public class ItemArmourStand extends ItemTerraBlock {
     public ItemArmourStand(Block i) {
         super(i);
         metaNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, 0, metaNames, 0, 16);
+        System.arraycopy(Global.WOOD_NAMES, 0, metaNames, 0, 16);
     }
 
     public boolean isValid(World world, int i, int j, int k) {

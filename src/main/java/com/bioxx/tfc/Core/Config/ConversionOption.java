@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
  * Since normally the recipes affected by this class are new recipes, they don't have to be removed in the constructor.
  * If this is not the case, you must remove them after initializing the object, but before the loadFromConfig is called.
  * Otherwise you may end up with double entries in the recipe list.
- * 
+ *
  * @author Dries007
  */
 public class ConversionOption extends SyncingOption {

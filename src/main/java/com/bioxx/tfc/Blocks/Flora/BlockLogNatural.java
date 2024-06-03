@@ -41,7 +41,7 @@ public class BlockLogNatural extends BlockTerra {
         super(Material.wood);
         this.setTickRandomly(true);
         this.woodNames = new String[16];
-        System.arraycopy(Global.WOOD_ALL, 0, woodNames, 0, 16);
+        System.arraycopy(Global.WOOD_NAMES, 0, woodNames, 0, 16);
         this.sideIcons = new IIcon[woodNames.length];
         this.innerIcons = new IIcon[woodNames.length];
         this.rotatedSideIcons = new IIcon[woodNames.length];

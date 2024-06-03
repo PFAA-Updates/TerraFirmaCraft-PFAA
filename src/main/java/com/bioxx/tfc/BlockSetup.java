@@ -144,8 +144,8 @@ public class BlockSetup extends TFCBlocks {
         GameRegistry.registerBlock(metalSheet, "MetalSheet");
 
         // Wooden Doors
-        for (int i = 0; i < Global.WOOD_ALL.length; i++)
-            GameRegistry.registerBlock(doors[i], "Door" + Global.WOOD_ALL[i].replaceAll(" ", ""));
+        for (int i = 0; i < Global.WOOD_NAMES.length; i++)
+            GameRegistry.registerBlock(doors[i], "Door" + Global.WOOD_NAMES[i].replaceAll(" ", ""));
 
         GameRegistry.registerBlock(ingotPile, "IngotPile");
         GameRegistry.registerBlock(barrel, ItemBarrels.class, "Barrel");
@@ -551,8 +551,8 @@ public class BlockSetup extends TFCBlocks {
         wallSmoothMM = new BlockCustomWall(stoneMMSmooth, 6).setBlockName("WallSmooth");
 
         // Wooden Doors
-        for (int i = 0; i < Global.WOOD_ALL.length; i++)
-            doors[i] = new BlockCustomDoor(i * 2).setBlockName("Door " + Global.WOOD_ALL[i]);
+        for (int i = 0; i < Global.WOOD_NAMES.length; i++)
+            doors[i] = new BlockCustomDoor(i * 2).setBlockName("Door " + Global.WOOD_NAMES[i]);
 
         ingotPile = new BlockIngotPile().setBlockName("ingotpile")
             .setHardness(3);
@@ -777,6 +777,6 @@ public class BlockSetup extends TFCBlocks {
         Blocks.fire.setFireInfo(crops, 20, 20);
         Blocks.fire.setFireInfo(logPile, 10, 10);
         // Blocks.fire.setFireInfo(Charcoal, 100, 20);
-        for (int i = 0; i < Global.WOOD_ALL.length; i++) Blocks.fire.setFireInfo(doors[i], 5, 20);
+        for (int i = 0; i < Global.WOOD_NAMES.length; i++) Blocks.fire.setFireInfo(doors[i], 5, 20);
     }
 }

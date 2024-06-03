@@ -10,10 +10,10 @@ public class ItemCustomWoodH3 extends ItemTerraBlock {
 
     public ItemCustomWoodH3(Block b) {
         super(b);
-        int size = Global.WOOD_ALL.length - 16;
+        int size = Global.WOOD_NAMES.length - 16;
         metaNames = new String[size * 2];
-        System.arraycopy(Global.WOOD_ALL, 16, metaNames, 0, size);
-        System.arraycopy(Global.WOOD_ALL, 16, metaNames, size, size);
+        System.arraycopy(Global.WOOD_NAMES, 16, metaNames, 0, size);
+        System.arraycopy(Global.WOOD_NAMES, 16, metaNames, size, size);
     }
 
     @Override

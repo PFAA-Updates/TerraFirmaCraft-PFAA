@@ -57,7 +57,7 @@ public class ItemMiscToolHead extends ItemTerra implements ISmeltable {
 
     @Override
     public Metal getMetalType(ItemStack is) {
-        if (this == TFCItems.wroughtIronKnifeHead) return Global.WROUGHTIRON;
+        if (this == TFCItems.wroughtIronKnifeHead) return Global.WROUGHT_IRON;
         else return null;
     }
 

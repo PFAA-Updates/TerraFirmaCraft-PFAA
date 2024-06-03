@@ -48,7 +48,7 @@ public class TFCProvider extends WorldProvider {
     @Override
     public boolean canCoordinateBeSpawn(int x, int z) {
         int y = worldObj.getTopSolidOrLiquidBlock(x, z) - 1;
-        if (y < Global.SEALEVEL || y > Global.SEALEVEL + 25) return false;
+        if (y < Global.SEA_LEVEL || y > Global.SEA_LEVEL + 25) return false;
         Block b = worldObj.getBlock(x, y, z);
         return TFC_Core.isSand(b) || TFC_Core.isGrass(b);
     }

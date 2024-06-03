@@ -13,9 +13,9 @@ public class BlockMM extends BlockStone {
     public BlockMM(Material material) {
         super(material);
         this.dropBlock = TFCBlocks.stoneMMCobble;
-        names = Global.STONE_MM;
+        names = Global.STONE_METAMORPHIC;
         icons = new IIcon[names.length];
-        looseStart = Global.STONE_MM_START;
+        looseStart = Global.STONE_METAMORPHIC_START;
         gemChance = 3;
     }
 }

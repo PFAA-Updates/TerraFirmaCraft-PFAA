@@ -33,8 +33,8 @@ public class BlockStand2 extends BlockStand implements IMultipleBlock, IEquipabl
         super();
         this.setCreativeTab(TFCTabs.TFC_DECORATION);
         this.setBlockBounds(0.125f, 0, 0.125f, 0.875f, 1, 0.875f);
-        woodNames = new String[Global.WOOD_ALL.length - 16];
-        System.arraycopy(Global.WOOD_ALL, 16, woodNames, 0, Global.WOOD_ALL.length - 16);
+        woodNames = new String[Global.WOOD_NAMES.length - 16];
+        System.arraycopy(Global.WOOD_NAMES, 16, woodNames, 0, Global.WOOD_NAMES.length - 16);
     }
 
     @Override

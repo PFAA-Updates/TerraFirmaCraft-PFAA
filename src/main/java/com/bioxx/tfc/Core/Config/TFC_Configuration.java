@@ -17,8 +17,8 @@ public class TFC_Configuration extends Configuration {
     }
 
     /**
-     * Creates a integer property.
-     * 
+     * Creates an integer property.
+     *
      * @param name         Name of the property.
      * @param category     Category of the property.
      * @param defaultValue Default value of the property.
@@ -37,9 +37,7 @@ public class TFC_Configuration extends Configuration {
         prop.setMinValue(minValue);
         prop.setMaxValue(maxValue);
         if (prop.getInt(defaultValue) < minValue || prop.getInt(defaultValue) > maxValue) {
-            TerraFirmaCraft.LOG.warn(
-                "An invalid value has been entered for " + name
-                    + " in the config file. Reverting to the default value.");
+            TerraFirmaCraft.LOG.warn("An invalid value has been entered for {} in the config file. Reverting to the default value.", name);
             prop.set(defaultValue);
             return defaultValue;
         }
@@ -48,7 +46,7 @@ public class TFC_Configuration extends Configuration {
 
     /**
      * Creates a float property.
-     * 
+     *
      * @param name         Name of the property.
      * @param category     Category of the property.
      * @param defaultValue Default value of the property.
@@ -68,9 +66,7 @@ public class TFC_Configuration extends Configuration {
         prop.setMaxValue(maxValue);
         try {
             if (Float.parseFloat(prop.getString()) < minValue || Float.parseFloat(prop.getString()) > maxValue) {
-                TerraFirmaCraft.LOG.warn(
-                    "An invalid value has been entered for " + name
-                        + " in the config file. Reverting to the default value.");
+                TerraFirmaCraft.LOG.warn("An invalid value has been entered for {} in the config file. Reverting to the default value.", name);
                 prop.set(defaultValue);
                 return defaultValue;
             }
@@ -80,5 +76,4 @@ public class TFC_Configuration extends Configuration {
         }
         return defaultValue;
     }
-
 }

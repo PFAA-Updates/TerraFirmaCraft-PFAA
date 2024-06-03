@@ -11,9 +11,9 @@ public class BlockIgEx extends BlockStone {
     public BlockIgEx(Material material) {
         super(material);
         this.dropBlock = TFCBlocks.stoneIgExCobble;
-        names = Global.STONE_IGEX;
+        names = Global.STONE_IGNEOUS_EXTRUSIVE;
         icons = new IIcon[names.length];
-        looseStart = Global.STONE_IGEX_START;
+        looseStart = Global.STONE_IGNEOUS_EXTRUSIVE_START;
         gemChance = 0;
     }
 }

@@ -10,9 +10,9 @@ public class BlockSedCobble extends BlockCobble {
 
     public BlockSedCobble(Material material) {
         super(material);
-        names = Global.STONE_SED;
+        names = Global.STONE_SEDIMENTARY;
         icons = new IIcon[names.length];
-        looseStart = Global.STONE_SED_START;
+        looseStart = Global.STONE_SEDIMENTARY_START;
     }
 
     @Override

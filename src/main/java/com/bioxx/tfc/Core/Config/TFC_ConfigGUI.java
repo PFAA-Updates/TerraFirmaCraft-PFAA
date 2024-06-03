@@ -20,7 +20,7 @@ public class TFC_ConfigGUI extends GuiConfig {
     }
 
     private static List<IConfigElement> getConfigElements() {
-        List<IConfigElement> root = new ArrayList<IConfigElement>();
+        List<IConfigElement> root = new ArrayList<>();
         root.add(
             new DummyCategoryElement(
                 "TFCOptions.cfg",
@@ -37,10 +37,10 @@ public class TFC_ConfigGUI extends GuiConfig {
     }
 
     private static List<IConfigElement> getAllFrom(Configuration generalConfig) {
-        List<IConfigElement> root = new ArrayList<IConfigElement>();
+        List<IConfigElement> root = new ArrayList<>();
         for (String catName : generalConfig.getCategoryNames()) {
-            if (catName.contains(Configuration.CATEGORY_SPLITTER)) continue; // getCategoryNames includes sub
-                                                                             // categories, which we don't want.
+            // getCategoryNames includes sub categories, which we don't want.
+            if (catName.contains(Configuration.CATEGORY_SPLITTER)) { continue; }
             root.add(new ConfigElement(generalConfig.getCategory(catName)));
         }
         return root;

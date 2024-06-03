@@ -29,13 +29,13 @@ public class TESRChest extends TileEntitySpecialRenderer {
 
     public TESRChest() {
         if (texNormal == null) {
-            texNormal = new ResourceLocation[Global.WOOD_ALL.length];
-            texNormalDouble = new ResourceLocation[Global.WOOD_ALL.length];
-            for (int i = 0; i < Global.WOOD_ALL.length; i++) {
+            texNormal = new ResourceLocation[Global.WOOD_NAMES.length];
+            texNormalDouble = new ResourceLocation[Global.WOOD_NAMES.length];
+            for (int i = 0; i < Global.WOOD_NAMES.length; i++) {
                 texNormal[i] = new ResourceLocation(
-                    Reference.MOD_ID + ":textures/models/chest/normal_" + Global.WOOD_ALL[i] + ".png");
+                    Reference.MOD_ID + ":textures/models/chest/normal_" + Global.WOOD_NAMES[i] + ".png");
                 texNormalDouble[i] = new ResourceLocation(
-                    Reference.MOD_ID + ":textures/models/chest/normal_double_" + Global.WOOD_ALL[i] + ".png");
+                    Reference.MOD_ID + ":textures/models/chest/normal_double_" + Global.WOOD_NAMES[i] + ".png");
             }
         }
     }
