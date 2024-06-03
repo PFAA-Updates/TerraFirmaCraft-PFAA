@@ -2,7 +2,7 @@ package com.bioxx.tfc.api;
 
 /**
  * Values in here are default, for bounds look in:
- * 
+ *
  * @see com.bioxx.tfc.Core.Config.TFC_ConfigFiles
  *
  *      The order of fields is the same as there appearance in the config file.
@@ -60,6 +60,7 @@ public class TFCOptions {
     public static int ravineRarity = 100;
     public static int lavaFissureRarity = 25;
     public static int waterFissureRarity = 90;
+    public static int rockBiomeSizeMultiplier = 5;
 
     // Crops
     public static boolean enableCropsDie;

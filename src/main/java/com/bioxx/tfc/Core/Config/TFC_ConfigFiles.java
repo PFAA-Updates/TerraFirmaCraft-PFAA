@@ -115,7 +115,7 @@ public class TFC_ConfigFiles {
 
     /**
      * Reloads all configs. While doing inits, don't call this.
-     * Call the individual config reload methods, at there appropriate times.
+     * Call the individual config reload methods, at their appropriate times.
      */
     public static void reloadAll() {
         reloadGeneral(); // No special needs
@@ -765,6 +765,14 @@ public class TFC_ConfigFiles {
             1000,
             "Controls the chance of a water fissure generating, smaller value is higher chance, more fissures. Set to 0 to disable water fissures.",
             "config.gui.TFCConfig.worldgen.waterFissureRarity");
+        rockBiomeSizeMultiplier = generalConfig.getInt(
+            "rockBiomeSizeMultiplier",
+            WORLD_GEN,
+            rockBiomeSizeMultiplier,
+            1,
+            65535,
+            "Controls how large rock biomes are in your world, smaller values means smaller biomes and vice versa.",
+            "config.gui.TFCConfig.worldgen.rockBiomeSizeMultiplier");
 
         generalConfig.setCategoryLanguageKey(CROPS, "config.gui.TFCConfig.crops");
 

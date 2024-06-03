@@ -1,5 +1,7 @@
 package com.bioxx.tfc.WorldGen.GenLayers.DataLayers.Rock;
 
+import static com.bioxx.tfc.api.TFCOptions.rockBiomeSizeMultiplier;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -31,7 +33,7 @@ public abstract class GenRockLayer extends GenLayerTFC {
         drawImage(512, layer, "Rock 5");
         layer = new GenLayerSmoothTFC(1000L, layer);
         drawImage(512, layer, "Rock 6");
-        for (int zoomLevel = 0; zoomLevel < 5; ++zoomLevel) {
+        for (int zoomLevel = 0; zoomLevel < rockBiomeSizeMultiplier; ++zoomLevel) {
             layer = new GenLayerZoomTFC(1000 + zoomLevel, layer);
             drawImage(512, layer, "Rock " + (7 + zoomLevel));
         }
