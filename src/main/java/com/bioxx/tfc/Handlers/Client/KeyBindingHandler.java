@@ -1,5 +1,6 @@
 package com.bioxx.tfc.Handlers.Client;
 
+import com.bioxx.tfc.Items.Tools.ItemProPick;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.settings.KeyBinding;
 
@@ -42,6 +43,7 @@ public class KeyBindingHandler {
                 if (player.getCurrentEquippedItem()
                     .getItem() instanceof ItemChisel) {
                     pi.switchChiselMode();
+
                     // Let's send the actual ChiselMode so the server/client does not
                     // come out of sync.
                     AbstractPacket pkt = new KeyPressPacket(pi.chiselMode);
@@ -49,7 +51,11 @@ public class KeyBindingHandler {
                 } else if (player.getCurrentEquippedItem()
                     .getItem() instanceof ItemCustomHoe) {
                         pi.switchHoeMode(player);
-                    }
+                } else if (player.getCurrentEquippedItem()
+                    .getItem() instanceof ItemProPick pick) {
+
+                    pick.switchMode(player.getCurrentEquippedItem());
+                }
             } else if (keyLockTool.isPressed() && pi != null) {
                 if (pi.lockX == -9999999) {
                     pi.lockX = BlockDetailed.lockX;

@@ -2,6 +2,7 @@ package com.bioxx.tfc.Items.Tools;
 
 import java.util.*;
 
+import com.bioxx.tfc.TerraFirmaCraft;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -29,11 +31,14 @@ import com.bioxx.tfc.api.Enums.EnumSize;
 import com.bioxx.tfc.api.Enums.EnumWeight;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 public class ItemProPick extends ItemTerra {
 
-    private Map<String, ProspectResult> results = new HashMap<String, ProspectResult>();
+    private final Map<String, ProspectResult> results = new HashMap<String, ProspectResult>();
     private Random random;
+
+    static final double FOUR_THIRDS_PI = (4D / 3) * Math.PI;
 
     public ItemProPick() {
         super();
@@ -59,6 +64,54 @@ public class ItemProPick extends ItemTerra {
         else return getIconFromDamageForRenderPass(stack.getItemDamage(), pass);
     }
 
+    public void switchMode(ItemStack itemstack) {
+        int mode = getMode(itemstack);
+        int maxMode = switch (this.getUnlocalizedName()) {
+            case "item.Bronze ProPick", "item.Black Bronze ProPick", "item.Bismuth Bronze ProPick" -> 2;
+            case "item.Wrought Iron ProPick" -> 3;
+            case "item.Steel ProPick" -> 4;
+            case "item.Black Steel ProPick" -> 5;
+            case "item.Blue Steel ProPick", "item.Red Steel ProPick" -> 6;
+            default -> 1; // Copper and unknown
+        };
+        mode++;
+        if (mode > maxMode) {
+            mode = 1;
+        }
+        NBTTagCompound nbt = itemstack.getTagCompound();
+        nbt.setInteger("prospect_mode", mode);
+        itemstack.setTagCompound(nbt);
+    }
+
+    private int getMode(ItemStack itemStack) {
+        NBTTagCompound nbt = itemStack.getTagCompound();
+        System.out.println(nbt);
+        if (nbt == null) {
+            nbt = new NBTTagCompound();
+            itemStack.setTagCompound(nbt);
+        }
+        if (!nbt.hasKey("prospect_mode")) {
+            System.out.println("Setting prospect mode to 3 for " + itemStack);
+            nbt.setInteger("prospect_mode", 3);
+            itemStack.setTagCompound(nbt);
+        }
+        return nbt.getInteger("prospect_mode");
+//        if (!itemStack.hasTag()) {
+//            itemStack.setTagCompound(new NBTTagCompound());
+//        }
+//        NBTTagCompound compound = itemStack.getTagCompound();
+//        if (compound.getInteger("prospect_mode") == 0) {
+//            compound.setInteger("prospect_mode", 1);
+//        }
+//        System.out.println("prospect_mode: " + compound.getInteger("prospect_mode"));
+//        return compound.getInteger("prospect_mode");
+    }
+
+    private int getProspectingRadius(ItemStack itemStack) {
+        int mode = this.getMode(itemStack);
+        return new int[]{10, 16, 20, 24, 30, 40}[mode - 1];
+    }
+
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side,
         float hitX, float hitY, float hitZ) {
@@ -67,7 +120,7 @@ public class ItemProPick extends ItemTerra {
             // Negated the old condition and exiting the method here instead.
             if (block == TFCBlocks.toolRack) return true;
 
-            // Getting the meta data only when we actually need it.
+            // Getting the metadata only when we actually need it.
             int meta = world.getBlockMetadata(x, y, z);
 
             SkillRank rank = TFC_Core.getSkillStats(player)
@@ -82,12 +135,8 @@ public class ItemProPick extends ItemTerra {
                 if (block == TFCBlocks.ore3) meta = meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length;
                 tellResult(player, new ItemStack(TFCItems.oreChunk, 1, meta));
                 return true;
-            } else if (!TFC_Core.isGround(block)) // Exclude ground blocks to help with performance
-            {
-                Iterator iter = WorldGenOre.oreList.values()
-                    .iterator();
-                while (iter.hasNext()) {
-                    OreSpawnData osd = (OreSpawnData) iter.next();
+            } else if (!TFC_Core.isGround(block)) { // Exclude ground blocks to help with performance
+                for (OreSpawnData osd : WorldGenOre.oreList.values()) {
                     if (osd != null && block == osd.block) {
                         tellResult(player, new ItemStack(block));
                         return true;
@@ -95,13 +144,13 @@ public class ItemProPick extends ItemTerra {
                 }
             }
 
-            random = new Random(x * z + y);
-            int chance = 60 + ((rank.ordinal() + 1) * 10);
+            random = new Random((long) x * z + y);
+            int chance = 70 + rank.ordinal() * 10;
 
             results.clear();
             // If random(100) is less than 60, it used to succeed. we don't need to
             // gather the blocks in a 25x25 area if it doesn't.
-            if (random.nextInt(100) >= chance && rank != SkillRank.Master) {
+            if (random.nextInt(100) > chance) {
                 tellNothingFound(player);
                 return true;
             }
@@ -109,9 +158,14 @@ public class ItemProPick extends ItemTerra {
             results.clear();
 
             // Check all blocks in the 25x25 area, centered on the targeted block.
-            for (int i = -12; i < 12; i++) {
-                for (int j = -12; j < 12; j++) {
-                    for (int k = -12; k < 12; k++) {
+            int radius = getProspectingRadius(itemStack);
+            TerraFirmaCraft.LOG.info("Prospecting radius: {}", radius);
+            for (int i = -radius; i <= radius; i++) {
+                for (int j = -radius; j <= radius; j++) {
+                    for (int k = -radius; k <= radius; k++) {
+                        // Not sure if this early termination is worthwhile
+                        // if (i + j + k > radius) { continue; }
+                        if (Math.sqrt(i * i + j * j + k * k) > radius) { continue; }
                         int blockX = x + i;
                         int blockY = y + j;
                         int blockZ = z + k;
@@ -119,23 +173,19 @@ public class ItemProPick extends ItemTerra {
                         block = world.getBlock(blockX, blockY, blockZ);
                         meta = world.getBlockMetadata(blockX, blockY, blockZ);
                         ItemStack ore = null;
-                        if (block == TFCBlocks.ore && world.getTileEntity(blockX, blockY, blockZ) instanceof TEOre) {
-                            TEOre te = (TEOre) world.getTileEntity(blockX, blockY, blockZ);
+                        if (block == TFCBlocks.ore && world.getTileEntity(blockX, blockY, blockZ) instanceof TEOre te) {
                             if (rank == SkillRank.Master)
                                 ore = new ItemStack(TFCItems.oreChunk, 1, ((BlockOre) block).getOreGrade(te, meta));
                             else ore = new ItemStack(TFCItems.oreChunk, 1, meta);
                         } else if (block == TFCBlocks.ore2)
                             ore = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL_NAMES.length);
-                        else if (block == TFCBlocks.ore3) ore = new ItemStack(
-                            TFCItems.oreChunk,
-                            1,
-                            meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length);
-                        else if (!TFC_Core.isGround(block)) // Exclude ground blocks to help with performance
-                        {
-                            Iterator iter = WorldGenOre.oreList.values()
-                                .iterator();
-                            while (iter.hasNext()) {
-                                OreSpawnData osd = (OreSpawnData) iter.next();
+                        else if (block == TFCBlocks.ore3){
+                            ore = new ItemStack(
+                                TFCItems.oreChunk,
+                                1,
+                                meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length);
+                        } else if (!TFC_Core.isGround(block)) { // Exclude ground blocks to help with performance
+                            for (OreSpawnData osd : WorldGenOre.oreList.values()) {
                                 if (osd != null && block == osd.block) {
                                     ore = new ItemStack(block);
                                     break;
@@ -148,9 +198,6 @@ public class ItemProPick extends ItemTerra {
 
                             if (results.containsKey(oreName)) results.get(oreName).count++;
                             else results.put(oreName, new ProspectResult(ore, 1));
-
-                            ore = null;
-                            oreName = null;
                         }
                     }
                 }
@@ -160,7 +207,7 @@ public class ItemProPick extends ItemTerra {
             if (results.isEmpty()) {
                 tellNothingFound(player);
             } else {
-                tellResult(player);
+                tellResult(player, radius);
             }
 
             results.clear();
@@ -182,7 +229,7 @@ public class ItemProPick extends ItemTerra {
     }
 
     /*
-     * Tells the player what block of ore he found, when directly targeting an ore block.
+     * Tells the player what block of ore they found, when directly targeting an ore block.
      */
     private void tellResult(EntityPlayer player, ItemStack ore) {
         String oreName = ore.getUnlocalizedName() + ".name";
@@ -196,7 +243,7 @@ public class ItemProPick extends ItemTerra {
     /*
      * Tells the player what ore has been found, randomly picked off the HashMap.
      */
-    private void tellResult(EntityPlayer player) {
+    private void tellResult(EntityPlayer player, int radius) {
         TFC_Core.getSkillStats(player)
             .increaseSkill(Global.SKILL_PROSPECTING, 1);
         int index = random.nextInt(results.size());
@@ -204,20 +251,27 @@ public class ItemProPick extends ItemTerra {
             .toArray(new ProspectResult[0])[index];
         String oreName = result.itemStack.getUnlocalizedName() + ".name";
 
-        String quantityMsg;
-        if (result.count < 10) quantityMsg = "gui.ProPick.FoundTraces";
-        else if (result.count < 20) quantityMsg = "gui.ProPick.FoundSmall";
-        else if (result.count < 40) quantityMsg = "gui.ProPick.FoundMedium";
-        else if (result.count < 80) quantityMsg = "gui.ProPick.FoundLarge";
-        else quantityMsg = "gui.ProPick.FoundVeryLarge";
+        String quantityMsg = getQuantityString(radius, result);
 
         TFC_Core.sendInfoMessage(
             player,
             new ChatComponentTranslation(quantityMsg).appendText(" ")
                 .appendSibling(new ChatComponentTranslation(oreName)));
+    }
 
-        oreName = null;
-        result = null;
+    /*
+     * Gets a string representation of the quantity of ore found.
+     */
+    private static String getQuantityString(int radius, ProspectResult result) {
+        String quantityMsg;
+
+        double proportion = result.count / (FOUR_THIRDS_PI * radius * radius * radius);
+        if (proportion < 0.001) { quantityMsg = "gui.ProPick.FoundTraces"; }
+        else if (proportion < 0.005) { quantityMsg = "gui.ProPick.FoundSmall"; }
+        else if (proportion < 0.015) { quantityMsg = "gui.ProPick.FoundMedium"; }
+        else if (proportion < 0.10) { quantityMsg = "gui.ProPick.FoundLarge"; }
+        else { quantityMsg = "gui.ProPick.FoundVeryLarge"; }
+        return quantityMsg;
     }
 
     @Override
@@ -225,7 +279,7 @@ public class ItemProPick extends ItemTerra {
         return false;
     }
 
-    private class ProspectResult {
+    private static class ProspectResult {
 
         public ItemStack itemStack;
         public int count;
