@@ -1,5 +1,7 @@
 package com.bioxx.tfc.Blocks.Terrain;
 
+import static com.bioxx.tfc.api.Constant.Global.isCoal;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -27,8 +29,6 @@ import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.TFCOptions;
-
-import static com.bioxx.tfc.api.Constant.Global.isCoal;
 
 public class BlockOre extends BlockCollapsible {
 

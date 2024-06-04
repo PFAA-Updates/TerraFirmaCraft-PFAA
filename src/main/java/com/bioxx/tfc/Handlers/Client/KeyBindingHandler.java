@@ -1,8 +1,8 @@
 package com.bioxx.tfc.Handlers.Client;
 
-import com.bioxx.tfc.Items.Tools.ItemProPick;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
 
 import org.lwjgl.input.Keyboard;
 
@@ -13,6 +13,7 @@ import com.bioxx.tfc.Handlers.Network.AbstractPacket;
 import com.bioxx.tfc.Handlers.Network.KeyPressPacket;
 import com.bioxx.tfc.Items.Tools.ItemChisel;
 import com.bioxx.tfc.Items.Tools.ItemCustomHoe;
+import com.bioxx.tfc.Items.Tools.ItemProPick;
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.TerraFirmaCraft;
 
@@ -28,7 +29,7 @@ public class KeyBindingHandler {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        PlayerInfo pi = PlayerManagerTFC.getInstance()
+        PlayerInfo playerInfo = PlayerManagerTFC.getInstance()
             .getClientPlayer();
         EntityClientPlayerMP player = FMLClientHandler.instance()
             .getClient().thePlayer;
@@ -40,33 +41,32 @@ public class KeyBindingHandler {
             && FMLClientHandler.instance()
                 .getClient().currentScreen == null) {
             if (keyToolMode.isPressed()) {
-                if (player.getCurrentEquippedItem()
-                    .getItem() instanceof ItemChisel) {
-                    pi.switchChiselMode();
+                Item item = player.getCurrentEquippedItem()
+                    .getItem();
+                if (item instanceof ItemChisel) {
+                    playerInfo.switchChiselMode();
 
                     // Sync chisel mode with server
-                    AbstractPacket pkt = new KeyPressPacket(pi.chiselMode);
+                    AbstractPacket pkt = new KeyPressPacket(playerInfo.chiselMode);
                     TerraFirmaCraft.PACKET_PIPELINE.sendToServer(pkt);
-                } else if (player.getCurrentEquippedItem()
-                    .getItem() instanceof ItemCustomHoe) {
-                        pi.switchHoeMode(player);
-                } else if (player.getCurrentEquippedItem()
-                    .getItem() instanceof ItemProPick pick) {
-                    pick.switchMode(player);
+                } else if (item instanceof ItemCustomHoe) {
+                    playerInfo.switchHoeMode(player);
+                } else if (item instanceof ItemProPick) {
+                    ((ItemProPick) item).switchMode(player);
 
                     // Sync prospectors pick mode with server
-                    AbstractPacket pkt = new KeyPressPacket(pi.chiselMode);
+                    AbstractPacket pkt = new KeyPressPacket(playerInfo.chiselMode);
                     TerraFirmaCraft.PACKET_PIPELINE.sendToServer(pkt);
                 }
-            } else if (keyLockTool.isPressed() && pi != null) {
-                if (pi.lockX == -9999999) {
-                    pi.lockX = BlockDetailed.lockX;
-                    pi.lockY = BlockDetailed.lockY;
-                    pi.lockZ = BlockDetailed.lockZ;
+            } else if (keyLockTool.isPressed() && playerInfo != null) {
+                if (playerInfo.lockX == -9999999) {
+                    playerInfo.lockX = BlockDetailed.lockX;
+                    playerInfo.lockY = BlockDetailed.lockY;
+                    playerInfo.lockZ = BlockDetailed.lockZ;
                 } else {
-                    pi.lockX = -9999999;
-                    pi.lockY = -9999999;
-                    pi.lockZ = -9999999;
+                    playerInfo.lockX = -9999999;
+                    playerInfo.lockY = -9999999;
+                    playerInfo.lockZ = -9999999;
                 }
             }
         }

@@ -55,16 +55,14 @@ public class Global {
         String.class);
 
     // Stones that can be turned into flux
-    public static final int[] STONE_FLUX_INDEX = {
-        Arrays.asList(STONE_ALL)
-            .indexOf("Limestone"),
+    public static final int[] STONE_FLUX_INDEX = { Arrays.asList(STONE_ALL)
+        .indexOf("Limestone"),
         Arrays.asList(STONE_ALL)
             .indexOf("Dolomite"),
         Arrays.asList(STONE_ALL)
             .indexOf("Chalk"),
         Arrays.asList(STONE_ALL)
-            .indexOf("Marble")
-    };
+            .indexOf("Marble") };
 
     /* Ore Types */
     public static final String[] ORE_METAL_NAMES = { "Native Copper", "Native Gold", "Native Platinum", "Hematite",
@@ -139,8 +137,8 @@ public class Global {
      * Switch to TFCOptions.foodDecayRate
      */
     // TODO: make sure this change does not break mod compatibility
-    //@Deprecated
-    //public static double foodDecayRate = TFCOptions.foodDecayRate;
+    // @Deprecated
+    // public static double foodDecayRate = TFCOptions.foodDecayRate;
 
     public static final float FOOD_MAX_WEIGHT = 160;
     public static final float FOOD_MIN_DROP_WEIGHT = 0.1f;

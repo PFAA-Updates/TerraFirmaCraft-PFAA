@@ -2,7 +2,6 @@ package com.bioxx.tfc.Items.Tools;
 
 import java.util.*;
 
-import com.bioxx.tfc.TerraFirmaCraft;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +10,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -22,6 +20,7 @@ import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_Textures;
 import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.Reference;
+import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.TileEntities.TEOre;
 import com.bioxx.tfc.WorldGen.Generators.OreSpawnData;
 import com.bioxx.tfc.WorldGen.Generators.WorldGenOre;
@@ -32,14 +31,13 @@ import com.bioxx.tfc.api.Enums.EnumSize;
 import com.bioxx.tfc.api.Enums.EnumWeight;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 public class ItemProPick extends ItemTerra {
 
-    private final Map<String, ProspectResult> results = new HashMap<String, ProspectResult>();
+    private final Map<String, ProspectResult> results = new HashMap<>();
     private Random random;
 
-    static final double FOUR_THIRDS_PI = (4D / 3) * Math.PI;
+    static final double FOUR_THIRDS_PI = (4.0D / 3) * Math.PI;
 
     public ItemProPick() {
         super();
@@ -68,14 +66,30 @@ public class ItemProPick extends ItemTerra {
     public void switchMode(EntityPlayer player) {
         ItemStack itemStack = player.getCurrentEquippedItem();
         int mode = getMode(itemStack);
-        int maxMode = switch (this.getUnlocalizedName()) {
-            case "item.Bronze ProPick", "item.Black Bronze ProPick", "item.Bismuth Bronze ProPick" -> 2;
-            case "item.Wrought Iron ProPick" -> 3;
-            case "item.Steel ProPick" -> 4;
-            case "item.Black Steel ProPick" -> 5;
-            case "item.Blue Steel ProPick", "item.Red Steel ProPick" -> 6;
-            default -> 1; // Copper and unknown
-        };
+        int maxMode;
+        switch (this.getUnlocalizedName()) {
+            case "item.Bronze ProPick":
+            case "item.Black Bronze ProPick":
+            case "item.Bismuth Bronze ProPick":
+                maxMode = 2;
+                break;
+            case "item.Wrought Iron ProPick":
+                maxMode = 3;
+                break;
+            case "item.Steel ProPick":
+                maxMode = 4;
+                break;
+            case "item.Black Steel ProPick":
+                maxMode = 5;
+                break;
+            case "item.Blue Steel ProPick":
+            case "item.Red Steel ProPick":
+                maxMode = 6;
+                break;
+            default:
+                maxMode = 1;
+                break; // Copper and unknown
+        }
         mode++;
         if (mode > maxMode) {
             mode = 1;
@@ -85,9 +99,8 @@ public class ItemProPick extends ItemTerra {
         if (player.getEntityWorld().isRemote) { // TODO: Use an icon instead of a chat message.
             TFC_Core.sendInfoMessage(
                 player,
-                new ChatComponentText("Prospectors pick radius now: "
-                    + getProspectingRadius(player.getCurrentEquippedItem()))
-            );
+                new ChatComponentText(
+                    "Prospectors pick radius now: " + getProspectingRadius(player.getCurrentEquippedItem())));
         }
     }
 
@@ -105,7 +118,20 @@ public class ItemProPick extends ItemTerra {
 
     private int getProspectingRadius(ItemStack itemStack) {
         int mode = this.getMode(itemStack);
-        return new int[]{10, 16, 20, 24, 30, 40}[mode - 1];
+        switch (mode) {
+            case 2:
+                return 16;
+            case 3:
+                return 20;
+            case 4:
+                return 24;
+            case 5:
+                return 30;
+            case 6:
+                return 40;
+            default:
+                return 10;
+        }
     }
 
     @Override
@@ -128,11 +154,12 @@ public class ItemProPick extends ItemTerra {
                 TEOre te = (TEOre) world.getTileEntity(x, y, z);
                 if (block == TFCBlocks.ore && rank == SkillRank.Master) meta = ((BlockOre) block).getOreGrade(te, meta);
                 if (block == TFCBlocks.ore2) meta = meta + Global.ORE_METAL_NAMES.length;
-                if (block == TFCBlocks.ore3) meta = meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length;
+                if (block == TFCBlocks.ore3)
+                    meta = meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length;
                 tellResult(player, new ItemStack(TFCItems.oreChunk, 1, meta));
                 return true;
             } else if (!TFC_Core.isGround(block)) { // Exclude ground blocks to help with performance
-                for (OreSpawnData osd : WorldGenOre.oreList.values()) {
+                for (OreSpawnData osd : WorldGenOre.oreList.values()) { // TODO: MAYBE
                     if (osd != null && block == osd.block) {
                         tellResult(player, new ItemStack(block));
                         return true;
@@ -155,13 +182,14 @@ public class ItemProPick extends ItemTerra {
 
             // Check all blocks in the 25x25 area, centered on the targeted block.
             int radius = getProspectingRadius(itemStack);
+            int radiusSquared = radius * radius;
             TerraFirmaCraft.LOG.info("Prospecting radius: {}", radius);
             for (int i = -radius; i <= radius; i++) {
                 for (int j = -radius; j <= radius; j++) {
                     for (int k = -radius; k <= radius; k++) {
-                        // Not sure if this early termination is worthwhile
-                        // if (i + j + k > radius) { continue; }
-                        if (Math.sqrt(i * i + j * j + k * k) > radius) { continue; }
+                        if (i * i + j * j + k * k > radiusSquared) {
+                            continue;
+                        }
                         int blockX = x + i;
                         int blockY = y + j;
                         int blockZ = z + k;
@@ -169,13 +197,14 @@ public class ItemProPick extends ItemTerra {
                         block = world.getBlock(blockX, blockY, blockZ);
                         meta = world.getBlockMetadata(blockX, blockY, blockZ);
                         ItemStack ore = null;
-                        if (block == TFCBlocks.ore && world.getTileEntity(blockX, blockY, blockZ) instanceof TEOre te) {
+                        if (block == TFCBlocks.ore && world.getTileEntity(blockX, blockY, blockZ) instanceof TEOre) {
+                            TEOre te = (TEOre) world.getTileEntity(blockX, blockY, blockZ);
                             if (rank == SkillRank.Master)
                                 ore = new ItemStack(TFCItems.oreChunk, 1, ((BlockOre) block).getOreGrade(te, meta));
                             else ore = new ItemStack(TFCItems.oreChunk, 1, meta);
                         } else if (block == TFCBlocks.ore2)
                             ore = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL_NAMES.length);
-                        else if (block == TFCBlocks.ore3){
+                        else if (block == TFCBlocks.ore3) {
                             ore = new ItemStack(
                                 TFCItems.oreChunk,
                                 1,
@@ -262,11 +291,17 @@ public class ItemProPick extends ItemTerra {
         String quantityMsg;
 
         double proportion = result.count / (FOUR_THIRDS_PI * radius * radius * radius);
-        if (proportion < 0.001) { quantityMsg = "gui.ProPick.FoundTraces"; }
-        else if (proportion < 0.005) { quantityMsg = "gui.ProPick.FoundSmall"; }
-        else if (proportion < 0.015) { quantityMsg = "gui.ProPick.FoundMedium"; }
-        else if (proportion < 0.10) { quantityMsg = "gui.ProPick.FoundLarge"; }
-        else { quantityMsg = "gui.ProPick.FoundVeryLarge"; }
+        if (proportion < 0.001) {
+            quantityMsg = "gui.ProPick.FoundTraces";
+        } else if (proportion < 0.005) {
+            quantityMsg = "gui.ProPick.FoundSmall";
+        } else if (proportion < 0.015) {
+            quantityMsg = "gui.ProPick.FoundMedium";
+        } else if (proportion < 0.10) {
+            quantityMsg = "gui.ProPick.FoundLarge";
+        } else {
+            quantityMsg = "gui.ProPick.FoundVeryLarge";
+        }
         return quantityMsg;
     }
 

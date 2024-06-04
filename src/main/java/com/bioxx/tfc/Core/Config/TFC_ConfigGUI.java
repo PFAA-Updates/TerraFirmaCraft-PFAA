@@ -40,7 +40,9 @@ public class TFC_ConfigGUI extends GuiConfig {
         List<IConfigElement> root = new ArrayList<>();
         for (String catName : generalConfig.getCategoryNames()) {
             // getCategoryNames includes sub categories, which we don't want.
-            if (catName.contains(Configuration.CATEGORY_SPLITTER)) { continue; }
+            if (catName.contains(Configuration.CATEGORY_SPLITTER)) {
+                continue;
+            }
             root.add(new ConfigElement(generalConfig.getCategory(catName)));
         }
         return root;

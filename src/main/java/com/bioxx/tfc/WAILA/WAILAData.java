@@ -431,7 +431,10 @@ public class WAILAData implements IWailaDataProvider {
             return itemstack;
         } else if (accessor.getBlock() == TFCBlocks.ore3) // Minerals
         {
-            itemstack = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length);
+            itemstack = new ItemStack(
+                TFCItems.oreChunk,
+                1,
+                meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length);
             return itemstack;
         }
 

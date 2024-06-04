@@ -44,7 +44,7 @@ public abstract class SyncingOption {
         this.defaultValue = field.getBoolean(null);
     }
 
-    //@SuppressWarnings("unchecked")
+    // @SuppressWarnings("unchecked")
     public void apply(boolean enabled) throws IllegalAccessException {
         if (currentValue != enabled) { // if we need to change states
             boolean result;
@@ -60,8 +60,12 @@ public abstract class SyncingOption {
             }
 
             if (TFCOptions.enableDebugMode) {
-                TerraFirmaCraft.LOG
-                    .info("Conversion option {} changed from {} to {}. Result: {}", name, currentValue, enabled, result);
+                TerraFirmaCraft.LOG.info(
+                    "Conversion option {} changed from {} to {}. Result: {}",
+                    name,
+                    currentValue,
+                    enabled,
+                    result);
             }
 
             field.setBoolean(null, enabled); // Keep the field up to date as well

@@ -593,7 +593,9 @@ public class TFC_ConfigFiles {
             TerraFirmaCraft.LOG.warn("Invalid yearLength in the config file. Changing to the next multiple of 12.");
             yearLength = 12 + (12 * (yearLength / 12)); // Extra validation, because we need multiples of 12. Rounds up
                                                         // so it can never be 0.
-            if (yearLength < 96) { yearLength = 96; }
+            if (yearLength < 96) {
+                yearLength = 96;
+            }
             prop.set(yearLength);
         }
         pitKilnBurnTime = generalConfig.getFloat(
@@ -932,7 +934,7 @@ public class TFC_ConfigFiles {
 
         // noinspection deprecation
         // TODO: make sure this does not break mod compatibility.
-        //Global.foodDecayRate = foodDecayRate; // keep deprecated value up to date
+        // Global.foodDecayRate = foodDecayRate; // keep deprecated value up to date
 
         if (generalConfig.hasChanged()) generalConfig.save();
     }

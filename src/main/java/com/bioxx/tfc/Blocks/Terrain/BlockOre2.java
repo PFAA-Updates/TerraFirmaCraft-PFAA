@@ -1,5 +1,7 @@
 package com.bioxx.tfc.Blocks.Terrain;
 
+import static com.bioxx.tfc.api.Constant.Global.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,8 +14,6 @@ import net.minecraft.world.World;
 
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.TFCItems;
-
-import static com.bioxx.tfc.api.Constant.Global.*;
 
 public class BlockOre2 extends BlockOre {
 

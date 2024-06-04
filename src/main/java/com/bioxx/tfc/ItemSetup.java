@@ -1288,7 +1288,10 @@ public class ItemSetup extends TFCItems {
 
     private static void registerMetals() {
         Global.BISMUTH = new Metal("Bismuth", TFCItems.bismuthUnshaped, TFCItems.bismuthIngot);
-        Global.BISMUTH_BRONZE = new Metal("Bismuth Bronze", TFCItems.bismuthBronzeUnshaped, TFCItems.bismuthBronzeIngot);
+        Global.BISMUTH_BRONZE = new Metal(
+            "Bismuth Bronze",
+            TFCItems.bismuthBronzeUnshaped,
+            TFCItems.bismuthBronzeIngot);
         Global.BLACK_BRONZE = new Metal("Black Bronze", TFCItems.blackBronzeUnshaped, TFCItems.blackBronzeIngot);
         Global.BLACK_STEEL = new Metal("Black Steel", TFCItems.blackSteelUnshaped, TFCItems.blackSteelIngot);
         Global.BLUE_STEEL = new Metal("Blue Steel", TFCItems.blueSteelUnshaped, TFCItems.blueSteelIngot);
