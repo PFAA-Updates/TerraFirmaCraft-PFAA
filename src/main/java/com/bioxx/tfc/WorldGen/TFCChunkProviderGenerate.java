@@ -222,7 +222,7 @@ public class TFCChunkProviderGenerate extends ChunkProviderGenerate {
         if (!var11 && this.rand.nextInt(waterRand) == 0) {
             x = xCoord + this.rand.nextInt(16) + 8;
             z = zCoord + this.rand.nextInt(16) + 8;
-            y = Global.SEA_LEVEL - rand.nextInt(45);
+            y = Global.SEALEVEL - rand.nextInt(45);
             // fissureGen.generate(this.worldObj, this.rand, x, y, z);
         }
 
@@ -702,7 +702,7 @@ public class TFCChunkProviderGenerate extends ChunkProviderGenerate {
                             }
 
                             // Determine the soil depth based on world height
-                            int dirtH = Math.max(8 - ((height + 96 - Global.SEA_LEVEL) / 16), 0);
+                            int dirtH = Math.max(8 - ((height + 96 - Global.SEALEVEL) / 16), 0);
 
                             if (var13 > 0) {
                                 if (height >= seaLevel - 1 && index + 1 < idsTop.length

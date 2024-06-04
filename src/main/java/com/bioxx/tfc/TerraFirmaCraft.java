@@ -88,7 +88,7 @@ public class TerraFirmaCraft {
         // Register Player Render Handler (Client only)
         proxy.registerPlayerRenderEventHandler();
 
-        SkillsManager.instance.registerSkill(Global.SKILL_GENSMITH, 250);
+        SkillsManager.instance.registerSkill(Global.SKILL_GENERAL_SMITHING, 250);
         SkillsManager.instance.registerSkill(Global.SKILL_TOOLSMITH, 100);
         SkillsManager.instance.registerSkill(Global.SKILL_ARMORSMITH, 100);
         SkillsManager.instance.registerSkill(Global.SKILL_WEAPONSMITH, 100);

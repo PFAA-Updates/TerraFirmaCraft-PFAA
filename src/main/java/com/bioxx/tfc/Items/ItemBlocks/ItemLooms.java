@@ -24,7 +24,7 @@ public class ItemLooms extends ItemTerraBlock {
         setMaxDamage(0);
         setHasSubtypes(true);
         this.setCreativeTab(TFCTabs.TFC_DEVICES);
-        this.metaNames = Global.WOOD_NAMES;
+        this.metaNames = Global.WOOD_ALL;
     }
 
     @Override

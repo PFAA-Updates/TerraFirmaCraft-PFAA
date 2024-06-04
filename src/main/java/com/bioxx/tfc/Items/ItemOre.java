@@ -78,7 +78,7 @@ public class ItemOre extends ItemTerra implements ISmeltable {
             case 2:
                 return Global.PLATINUM;
             case 3:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 4:
                 return Global.SILVER;
             case 5:
@@ -92,9 +92,9 @@ public class ItemOre extends ItemTerra implements ISmeltable {
             case 9:
                 return Global.COPPER;
             case 10:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 11:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 12:
                 return Global.ZINC;
             case 13:
@@ -107,7 +107,7 @@ public class ItemOre extends ItemTerra implements ISmeltable {
             case 37:
                 return Global.PLATINUM;
             case 38:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 39:
                 return Global.SILVER;
             case 40:
@@ -121,9 +121,9 @@ public class ItemOre extends ItemTerra implements ISmeltable {
             case 44:
                 return Global.COPPER;
             case 45:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 46:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 47:
                 return Global.ZINC;
             case 48:
@@ -136,7 +136,7 @@ public class ItemOre extends ItemTerra implements ISmeltable {
             case 51:
                 return Global.PLATINUM;
             case 52:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 53:
                 return Global.SILVER;
             case 54:
@@ -150,9 +150,9 @@ public class ItemOre extends ItemTerra implements ISmeltable {
             case 58:
                 return Global.COPPER;
             case 59:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 60:
-                return Global.PIG_IRON;
+                return Global.PIGIRON;
             case 61:
                 return Global.ZINC;
             case 62:

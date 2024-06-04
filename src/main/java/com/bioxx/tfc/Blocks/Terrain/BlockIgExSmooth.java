@@ -11,7 +11,7 @@ public class BlockIgExSmooth extends BlockSmooth {
     public BlockIgExSmooth() {
         super(Material.rock);
         this.setCreativeTab(TFCTabs.TFC_BUILDING);
-        names = Global.STONE_IGNEOUS_EXTRUSIVE;
+        names = Global.STONE_IGEX;
         icons = new IIcon[names.length];
     }
 }

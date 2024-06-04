@@ -736,7 +736,7 @@ public class TFC_Core {
     }
 
     public static boolean isOreIron(ItemStack is) {
-        return is.getItem() instanceof ItemOre && ((ItemOre) is.getItem()).getMetalType(is) == Global.PIG_IRON;
+        return is.getItem() instanceof ItemOre && ((ItemOre) is.getItem()).getMetalType(is) == Global.PIGIRON;
     }
 
     public static float getEntityMaxHealth(EntityLivingBase entity) {

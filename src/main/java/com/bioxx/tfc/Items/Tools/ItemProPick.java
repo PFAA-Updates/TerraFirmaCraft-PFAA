@@ -153,9 +153,8 @@ public class ItemProPick extends ItemTerra {
                 && world.getTileEntity(x, y, z) instanceof TEOre) {
                 TEOre te = (TEOre) world.getTileEntity(x, y, z);
                 if (block == TFCBlocks.ore && rank == SkillRank.Master) meta = ((BlockOre) block).getOreGrade(te, meta);
-                if (block == TFCBlocks.ore2) meta = meta + Global.ORE_METAL_NAMES.length;
-                if (block == TFCBlocks.ore3)
-                    meta = meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length;
+                if (block == TFCBlocks.ore2) meta = meta + Global.ORE_METAL.length;
+                if (block == TFCBlocks.ore3) meta = meta + Global.ORE_METAL.length + Global.ORE_MINERAL.length;
                 tellResult(player, new ItemStack(TFCItems.oreChunk, 1, meta));
                 return true;
             } else if (!TFC_Core.isGround(block)) { // Exclude ground blocks to help with performance
@@ -203,12 +202,12 @@ public class ItemProPick extends ItemTerra {
                                 ore = new ItemStack(TFCItems.oreChunk, 1, ((BlockOre) block).getOreGrade(te, meta));
                             else ore = new ItemStack(TFCItems.oreChunk, 1, meta);
                         } else if (block == TFCBlocks.ore2)
-                            ore = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL_NAMES.length);
+                            ore = new ItemStack(TFCItems.oreChunk, 1, meta + Global.ORE_METAL.length);
                         else if (block == TFCBlocks.ore3) {
                             ore = new ItemStack(
                                 TFCItems.oreChunk,
                                 1,
-                                meta + Global.ORE_METAL_NAMES.length + Global.ORE_MINERAL_NAMES.length);
+                                meta + Global.ORE_METAL.length + Global.ORE_MINERAL.length);
                         } else if (!TFC_Core.isGround(block)) { // Exclude ground blocks to help with performance
                             for (OreSpawnData osd : WorldGenOre.oreList.values()) {
                                 if (osd != null && block == osd.block) {

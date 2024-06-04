@@ -37,7 +37,7 @@ public class BlockCustomFenceGate extends BlockFenceGate implements ITileEntityP
     public BlockCustomFenceGate() {
         super();
         woodNames = new String[16];
-        System.arraycopy(Global.WOOD_NAMES, 0, woodNames, 0, 16);
+        System.arraycopy(Global.WOOD_ALL, 0, woodNames, 0, 16);
         icons = new IIcon[woodNames.length];
         this.setCreativeTab(TFCTabs.TFC_DEVICES);
     }

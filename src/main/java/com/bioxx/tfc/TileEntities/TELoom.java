@@ -170,7 +170,7 @@ public class TELoom extends NetworkTileEntity implements IInventory {
     public ResourceLocation getWoodResource() {
         return new ResourceLocation(
             Reference.MOD_ID,
-            "textures/blocks/wood/WoodSheet/" + Global.WOOD_NAMES[loomType] + ".png");
+            "textures/blocks/wood/WoodSheet/" + Global.WOOD_ALL[loomType] + ".png");
     }
 
     public ResourceLocation getStringResource() {

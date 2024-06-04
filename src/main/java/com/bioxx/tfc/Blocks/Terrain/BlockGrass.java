@@ -202,7 +202,7 @@ public class BlockGrass extends BlockTerra {
                     for (int y = 0; y < 2 && !nearWater; y++) {
                         for (int x = -4; x < 5 && !nearWater; x++) {
                             for (int z = -4; z < 5 && !nearWater; z++) {
-                                if (j < 250 && j > Global.SEA_LEVEL
+                                if (j < 250 && j > Global.SEALEVEL
                                     && world.blockExists(i + x, j - y, k + z)
                                     && world.getBlock(i + x, j - y, k + z)
                                         .getMaterial() == Material.water)
@@ -228,7 +228,7 @@ public class BlockGrass extends BlockTerra {
         for (int var6 = 0; var6 < 4; ++var6) {
             int x = i + rand.nextInt(3) - 1;
             int z = k + rand.nextInt(3) - 1;
-            if (world.blockExists(x, Global.SEA_LEVEL, z)) {
+            if (world.blockExists(x, Global.SEALEVEL, z)) {
                 int y = this.getTopSolidBlock(world, x, z);
 
                 if (y > 0) {

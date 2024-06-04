@@ -11,8 +11,8 @@ public class BlockLogNatural2 extends BlockLogNatural {
 
     public BlockLogNatural2() {
         super();
-        this.woodNames = new String[Global.WOOD_NAMES.length - 16];
-        System.arraycopy(Global.WOOD_NAMES, 16, woodNames, 0, Global.WOOD_NAMES.length - 16);
+        this.woodNames = new String[Global.WOOD_ALL.length - 16];
+        System.arraycopy(Global.WOOD_ALL, 16, woodNames, 0, Global.WOOD_ALL.length - 16);
         this.sideIcons = new IIcon[woodNames.length];
         this.innerIcons = new IIcon[woodNames.length];
         this.rotatedSideIcons = new IIcon[woodNames.length];

@@ -17,7 +17,7 @@ public class ItemChest extends ItemTerraBlock {
     public ItemChest(Block par1) {
         super(par1);
         setHasSubtypes(true);
-        this.metaNames = Global.WOOD_NAMES;
+        this.metaNames = Global.WOOD_ALL;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ItemChest extends ItemTerraBlock {
             field_150939_a.onPostBlockPlaced(world, x, y, z, 0);
 
             TEChest chest = (TEChest) world.getTileEntity(x, y, z);
-            if (metadata >= Global.WOOD_NAMES.length) {
+            if (metadata >= Global.WOOD_ALL.length) {
                 metadata /= 2;
                 chest.isDoubleChest = true;
             }
@@ -46,7 +46,7 @@ public class ItemChest extends ItemTerraBlock {
 
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list) {
-        for (int i = 0; i < Global.WOOD_NAMES.length; i++) {
+        for (int i = 0; i < Global.WOOD_ALL.length; i++) {
             list.add(new ItemStack(this, 1, i));
         }
     }

@@ -23,15 +23,15 @@ public class ItemAnvil1 extends ItemAnvil {
             case 2:
                 return Global.BRONZE;
             case 3:
-                return Global.WROUGHT_IRON;
+                return Global.WROUGHTIRON;
             case 4:
                 return Global.STEEL;
             case 5:
-                return Global.BLACK_STEEL;
+                return Global.BLACKSTEEL;
             case 6:
-                return Global.BLUE_STEEL;
+                return Global.BLUESTEEL;
             case 7:
-                return Global.RED_STEEL;
+                return Global.REDSTEEL;
             default:
                 return Global.UNKNOWN;
         }

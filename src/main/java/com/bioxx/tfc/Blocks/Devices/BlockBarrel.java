@@ -54,7 +54,7 @@ public class BlockBarrel extends BlockTerraContainer {
         super(Material.wood);
         this.setCreativeTab(TFCTabs.TFC_DEVICES);
         this.setBlockBounds(0.1f, 0, 0.1f, 0.9f, 1, 0.9f);
-        woodNames = Global.WOOD_NAMES;
+        woodNames = Global.WOOD_ALL;
     }
 
     @Override

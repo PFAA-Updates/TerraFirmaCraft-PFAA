@@ -29,14 +29,14 @@ public class ItemLogs extends ItemTerra {
         setMaxDamage(0);
         setHasSubtypes(true);
         setCreativeTab(TFCTabs.TFC_MATERIALS);
-        this.metaNames = Global.WOOD_NAMES.clone();
+        this.metaNames = Global.WOOD_ALL.clone();
         this.setWeight(EnumWeight.MEDIUM);
         this.setSize(EnumSize.MEDIUM);
     }
 
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list) {
-        for (int i = 0; i < Global.WOOD_NAMES.length; i++) {
+        for (int i = 0; i < Global.WOOD_ALL.length; i++) {
             list.add(new ItemStack(this, 1, i));
         }
     }
@@ -95,12 +95,12 @@ public class ItemLogs extends ItemTerra {
         return icons[0];
     }
 
-    private IIcon[] icons = new IIcon[Global.WOOD_NAMES.length];
+    private IIcon[] icons = new IIcon[Global.WOOD_ALL.length];
 
     @Override
     public void registerIcons(IIconRegister registerer) {
-        for (int i = 0; i < Global.WOOD_NAMES.length; i++) {
-            icons[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "wood/" + Global.WOOD_NAMES[i] + " Log");
+        for (int i = 0; i < Global.WOOD_ALL.length; i++) {
+            icons[i] = registerer.registerIcon(Reference.MOD_ID + ":" + "wood/" + Global.WOOD_ALL[i] + " Log");
         }
     }
 

@@ -12,12 +12,12 @@ public class BlockLogHoriz2 extends BlockLogHoriz {
 
     public BlockLogHoriz2(int off) {
         super(off);
-        int size = Global.WOOD_NAMES.length - 16 - off;
+        int size = Global.WOOD_ALL.length - 16 - off;
         if (size < 0) size = 0;
         woodNames = new String[size * 2];
-        if (off < Global.WOOD_NAMES.length - 16) {
-            System.arraycopy(Global.WOOD_NAMES, 16 + off, woodNames, 0, size);
-            System.arraycopy(Global.WOOD_NAMES, 16 + off, woodNames, size, size);
+        if (off < Global.WOOD_ALL.length - 16) {
+            System.arraycopy(Global.WOOD_ALL, 16 + off, woodNames, 0, size);
+            System.arraycopy(Global.WOOD_ALL, 16 + off, woodNames, size, size);
         }
     }
 

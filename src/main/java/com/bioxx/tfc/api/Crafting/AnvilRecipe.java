@@ -55,7 +55,7 @@ public class AnvilRecipe {
         this.result = result;
         inheritsDamage = false;
         this.plan = p;
-        skillsList.add(Global.SKILL_GENSMITH);
+        skillsList.add(Global.SKILL_GENERAL_SMITHING);
     }
 
     public AnvilRecipe(ItemStack in, ItemStack p, boolean flux, AnvilReq req) {

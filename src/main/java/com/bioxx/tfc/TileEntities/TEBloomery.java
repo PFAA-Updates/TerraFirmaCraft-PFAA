@@ -64,8 +64,8 @@ public class TEBloomery extends NetworkTileEntity {
     }
 
     public boolean addOreToFire(ItemStack is) {
-        if (((ISmeltable) is.getItem()).getMetalType(is) == Global.PIG_IRON
-            || ((ISmeltable) is.getItem()).getMetalType(is) == Global.WROUGHT_IRON) {
+        if (((ISmeltable) is.getItem()).getMetalType(is) == Global.PIGIRON
+            || ((ISmeltable) is.getItem()).getMetalType(is) == Global.WROUGHTIRON) {
             outCount += ((ISmeltable) is.getItem()).getMetalReturnAmount(is);
             return true;
         }

@@ -156,7 +156,7 @@ public class TFCBlocks {
     public static Block wallSmoothSed;
     public static Block wallSmoothMM;
 
-    public static Block[] doors = new Block[Global.WOOD_NAMES.length];
+    public static Block[] doors = new Block[Global.WOOD_ALL.length];
 
     public static Block ingotPile;
     public static Block barrel;

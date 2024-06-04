@@ -17,7 +17,7 @@ public class WorldGenCustomVines extends WorldGenerator {
         int var6 = x;
         int var7 = z;
 
-        for (; y > Global.SEA_LEVEL; --y) {
+        for (; y > Global.SEALEVEL; --y) {
             if (world.isAirBlock(x, y, z)) {
                 for (int var8 = 2; var8 <= 5; ++var8) {
                     if (TFCBlocks.vine.canPlaceBlockOnSide(world, x, y, z, var8)) {

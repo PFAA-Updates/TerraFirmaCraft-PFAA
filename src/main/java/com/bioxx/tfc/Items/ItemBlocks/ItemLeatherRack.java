@@ -35,7 +35,7 @@ public class ItemLeatherRack extends ItemTerraBlock {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list) {
-        for (int i = 0; i < Global.WOOD_NAMES.length; i++) {
+        for (int i = 0; i < Global.WOOD_ALL.length; i++) {
             list.add(new ItemStack(this, 1, i));
         }
     }

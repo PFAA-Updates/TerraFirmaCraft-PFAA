@@ -39,7 +39,7 @@ public class BlockSapling extends BlockTerraContainer {
         float f = 0.4F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
         this.woodNames = new String[16];
-        System.arraycopy(Global.WOOD_NAMES, 0, this.woodNames, 0, 16);
+        System.arraycopy(Global.WOOD_ALL, 0, this.woodNames, 0, 16);
         this.setTickRandomly(true);
         this.setCreativeTab(TFCTabs.TFC_DECORATION);
         this.icons = new IIcon[woodNames.length];

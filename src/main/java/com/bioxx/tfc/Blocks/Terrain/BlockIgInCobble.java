@@ -9,8 +9,8 @@ public class BlockIgInCobble extends BlockCobble {
 
     public BlockIgInCobble(Material material) {
         super(material);
-        names = Global.STONE_IGNEOUS_INTRUSIVE;
+        names = Global.STONE_IGIN;
         icons = new IIcon[names.length];
-        looseStart = Global.STONE_IGNEOUS_INTRUSIVE_START;
+        looseStart = Global.STONE_IGIN_START;
     }
 }
