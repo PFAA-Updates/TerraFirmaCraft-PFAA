@@ -84,8 +84,9 @@ public class BlockOre extends BlockCollapsible {
 
     @Override
     public int quantityDropped(int meta, int fortune, Random random) {
-        if (isCoal(meta)) // coal
+        if (isCoal(meta)) { // coal
             return 1 + random.nextInt(2);
+        }
         return 1;
     }
 

@@ -69,11 +69,16 @@ public class BlockOre2 extends BlockOre {
                 int meta = world.getBlockMetadata(x, y, z);
                 Random random = new Random();
 
-                ItemStack itemstack = new ItemStack(TFCItems.oreChunk, 1, damageDropped(meta));
+                ItemStack itemstack;
+                int quantity = quantityDropped(meta, 0, random);
 
-                if (meta == KIMBERLITE) itemstack = kimberliteGemSpawn(); // Drop diamonds
-                else if (meta == SALTPETER) // Saltpeter
-                    itemstack = new ItemStack(TFCItems.powder, 1 + random.nextInt(3), 4);
+                if (meta == KIMBERLITE) {
+                    itemstack = kimberliteGemSpawn(); // Drop diamonds
+                } else if (meta == SALTPETER) { // Saltpeter
+                    itemstack = new ItemStack(TFCItems.powder, quantity, 4);
+                } else {
+                    itemstack = new ItemStack(TFCItems.oreChunk, quantity, damageDropped(meta));
+                }
 
                 if (itemstack != null) dropBlockAsItem(world, x, y, z, itemstack);
             }
@@ -140,10 +145,15 @@ public class BlockOre2 extends BlockOre {
         Random random = new Random();
         ItemStack itemstack;
         int meta = world.getBlockMetadata(x, y, z);
-        itemstack = new ItemStack(TFCItems.oreChunk, 1, meta + 16);
+        int quantity = quantityDropped(meta, 0, random);
 
-        if (meta == 5) itemstack = kimberliteGemSpawn();
-        else if (meta == 13) itemstack = new ItemStack(TFCItems.powder, 1 + random.nextInt(3), 4);
+        if (meta == KIMBERLITE) {
+            itemstack = kimberliteGemSpawn();
+        } else if (meta == SALTPETER) {
+            itemstack = new ItemStack(TFCItems.powder, quantity, 4);
+        } else {
+            itemstack = new ItemStack(TFCItems.oreChunk, quantity, meta + 16);
+        }
 
         if (itemstack != null) dropBlockAsItem(world, x, y, z, itemstack);
 
