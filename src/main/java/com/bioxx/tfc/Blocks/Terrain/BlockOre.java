@@ -28,6 +28,8 @@ import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.TFCOptions;
 
+import static com.bioxx.tfc.api.Constant.Global.isCoal;
+
 public class BlockOre extends BlockCollapsible {
 
     public String[] blockNames = Global.ORE_METAL_NAMES;
@@ -75,14 +77,14 @@ public class BlockOre extends BlockCollapsible {
 
     @Override
     public int damageDropped(int dmg) {
-        if (dmg == 14 || dmg == 15) // coal
+        if (isCoal(dmg)) // coal
             return 0;
         return dmg;
     }
 
     @Override
     public int quantityDropped(int meta, int fortune, Random random) {
-        if (meta == 14 || meta == 15) // coal
+        if (isCoal(meta)) // coal
             return 1 + random.nextInt(2);
         return 1;
     }
@@ -159,7 +161,7 @@ public class BlockOre extends BlockCollapsible {
         int count = quantityDropped(metadata, fortune, world.rand);
         for (int i = 0; i < count; i++) {
             ItemStack itemstack;
-            if (metadata == 14 || metadata == 15) itemstack = new ItemStack(TFCItems.coal);
+            if (isCoal(metadata)) itemstack = new ItemStack(TFCItems.coal);
             else itemstack = new ItemStack(TFCItems.oreChunk, 1, damageDropped(ore));
 
             ret.add(itemstack);
@@ -168,7 +170,7 @@ public class BlockOre extends BlockCollapsible {
     }
 
     public static Item getDroppedItem(int meta) {
-        if (meta == 14 || meta == 15) return TFCItems.coal;
+        if (isCoal(meta)) return TFCItems.coal;
         else return TFCItems.smallOreChunk;
     }
 
@@ -191,7 +193,7 @@ public class BlockOre extends BlockCollapsible {
             int meta = world.getBlockMetadata(x, y, z);
             int ore = getOreGrade(te, meta);
 
-            if (meta == 14 || meta == 15) itemstack = new ItemStack(TFCItems.coal, 1 + random.nextInt(2));
+            if (isCoal(meta)) itemstack = new ItemStack(TFCItems.coal, 1 + random.nextInt(2));
             else itemstack = new ItemStack(TFCItems.oreChunk, 1, ore);
 
             dropBlockAsItem(world, x, y, z, itemstack);

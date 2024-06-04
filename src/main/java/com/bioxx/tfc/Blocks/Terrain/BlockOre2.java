@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.TFCItems;
 
+import static com.bioxx.tfc.api.Constant.Global.*;
+
 public class BlockOre2 extends BlockOre {
 
     public BlockOre2(Material mat) {
@@ -27,8 +29,12 @@ public class BlockOre2 extends BlockOre {
 
     @Override
     public int quantityDropped(int meta, int fortune, Random random) {
-        if (meta == 13) // saltpeter
+        if (meta == SALTPETER) {
             return 1 + random.nextInt(3);
+        }
+        if (meta == GRAPHITE) {
+            return 1 + random.nextInt(2);
+        }
         return 1;
     }
 
@@ -40,8 +46,8 @@ public class BlockOre2 extends BlockOre {
         for (int i = 0; i < count; i++) {
             ItemStack itemstack = new ItemStack(TFCItems.oreChunk, 1, damageDropped(metadata));
 
-            if (metadata == 5) itemstack = kimberliteGemSpawn(); // Drop diamonds
-            else if (metadata == 13) itemstack = new ItemStack(TFCItems.powder, 1, 4);
+            if (metadata == KIMBERLITE) itemstack = kimberliteGemSpawn(); // Drop diamonds
+            else if (metadata == SALTPETER) itemstack = new ItemStack(TFCItems.powder, 1, 4);
 
             if (itemstack != null) {
                 ret.add(itemstack);
@@ -65,8 +71,8 @@ public class BlockOre2 extends BlockOre {
 
                 ItemStack itemstack = new ItemStack(TFCItems.oreChunk, 1, damageDropped(meta));
 
-                if (meta == 5) itemstack = kimberliteGemSpawn(); // Drop diamonds
-                else if (meta == 13) // Saltpeter
+                if (meta == KIMBERLITE) itemstack = kimberliteGemSpawn(); // Drop diamonds
+                else if (meta == SALTPETER) // Saltpeter
                     itemstack = new ItemStack(TFCItems.powder, 1 + random.nextInt(3), 4);
 
                 if (itemstack != null) dropBlockAsItem(world, x, y, z, itemstack);

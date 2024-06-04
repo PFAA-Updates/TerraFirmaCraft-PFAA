@@ -55,22 +55,43 @@ public class Global {
         String.class);
 
     // Stones that can be turned into flux
-    public static final int[] STONE_FLUX_INDEX = { Arrays.asList(STONE_ALL)
-        .indexOf("Limestone"),
+    public static final int[] STONE_FLUX_INDEX = {
+        Arrays.asList(STONE_ALL)
+            .indexOf("Limestone"),
         Arrays.asList(STONE_ALL)
             .indexOf("Dolomite"),
         Arrays.asList(STONE_ALL)
             .indexOf("Chalk"),
         Arrays.asList(STONE_ALL)
-            .indexOf("Marble") };
+            .indexOf("Marble")
+    };
 
     /* Ore Types */
     public static final String[] ORE_METAL_NAMES = { "Native Copper", "Native Gold", "Native Platinum", "Hematite",
         "Native Silver", "Cassiterite", "Galena", "Bismuthinite", "Garnierite", "Malachite", "Magnetite", "Limonite",
         "Sphalerite", "Tetrahedrite", "Bituminous Coal", "Lignite" };
+    public static final int BITUMINOUS_COAL = 14;
+    public static final int LIGNITE = 15;
+
     public static final String[] ORE_MINERAL_NAMES = { "Kaolinite", "Gypsum", "Satinspar", "Selenite", "Graphite",
         "Kimberlite", "Petrified Wood", "Sulfur", "Jet", "Microcline", "Pitchblende", "Cinnabar", "Cryolite",
         "Saltpeter", "Serpentine", "Sylvite" };
+    public static final int KAOLINITE = 0;
+    public static final int GYPSUM = 1;
+    public static final int SATINSPAR = 2;
+    public static final int SELENITE = 3;
+    public static final int GRAPHITE = 4;
+    public static final int KIMBERLITE = 5;
+    public static final int PETRIFIED_WOOD = 6;
+    public static final int SULFUR = 7;
+    public static final int JET = 8;
+    public static final int MICROCLINE = 9;
+    public static final int PITCHEBLENDE = 10;
+    public static final int CINNABAR = 11;
+    public static final int CRYOLITE = 12;
+    public static final int SALTPETER = 13;
+    public static final int SERPENTINE = 14;
+    public static final int SYLVITE = 15;
     public static final String[] ORE_MINERAL2_NAMES = { "Borax", "Olivine", "Lapis Lazuli" };
 
     public static final String[] WOOD_NAMES = { "Oak", "Aspen", "Birch", "Chestnut", "Douglas Fir", "Hickory", "Maple",
@@ -127,4 +148,8 @@ public class Global {
     public static final int SEA_LEVEL = 144;
 
     public static final int HOT_LIQUID_TEMP = 385; // Water's boiling point is 373.2 K
+
+    public static boolean isCoal(int meta) {
+        return meta == BITUMINOUS_COAL || meta == LIGNITE;
+    }
 }
