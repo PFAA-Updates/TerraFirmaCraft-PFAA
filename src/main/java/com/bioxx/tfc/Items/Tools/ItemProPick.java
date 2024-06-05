@@ -1,5 +1,7 @@
 package com.bioxx.tfc.Items.Tools;
 
+import static com.bioxx.tfc.Core.Player.SkillStats.SkillRank.Novice;
+
 import java.util.*;
 
 import net.minecraft.block.Block;
@@ -10,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -170,8 +173,6 @@ public class ItemProPick extends ItemTerra {
             int chance = 70 + rank.ordinal() * 10;
 
             results.clear();
-            // If random(100) is less than 60, it used to succeed. we don't need to
-            // gather the blocks in a 25x25 area if it doesn't.
             if (random.nextInt(100) > chance) {
                 tellNothingFound(player);
                 return true;
@@ -179,7 +180,7 @@ public class ItemProPick extends ItemTerra {
 
             results.clear();
 
-            // Check all blocks in the 25x25 area, centered on the targeted block.
+            // Check all blocks in a radius centered on the targeted block.
             int radius = getProspectingRadius(itemStack);
             int radiusSquared = radius * radius;
             TerraFirmaCraft.LOG.info("Prospecting radius: {}", radius);
@@ -270,17 +271,68 @@ public class ItemProPick extends ItemTerra {
     private void tellResult(EntityPlayer player, int radius) {
         TFC_Core.getSkillStats(player)
             .increaseSkill(Global.SKILL_PROSPECTING, 1);
-        int index = random.nextInt(results.size());
-        ProspectResult result = results.values()
-            .toArray(new ProspectResult[0])[index];
+        ProspectResult[] resultsArray = results.values()
+            .toArray(new ProspectResult[0]);
+
+        SkillRank rank = TFC_Core.getSkillStats(player)
+            .getSkillRank(Global.SKILL_PROSPECTING);
+        if (rank.ordinal() == Novice.ordinal() || resultsArray.length == 1) {
+            int index = random.nextInt(results.size());
+            tellSingleResult(resultsArray[index], player, radius);
+        } else if (rank.ordinal() == SkillRank.Adept.ordinal() || resultsArray.length == 2) {
+            int index1 = random.nextInt(results.size());
+            tellSingleResult(resultsArray[index1], player, radius);
+
+            int index2 = random.nextInt(results.size());
+            if (index2 == index1) index2 = (index2 + 1) % resultsArray.length;
+            tellSingleResult(resultsArray[index2], player, radius);
+        } else {
+            for (ProspectResult result : resultsArray) {
+                tellSingleResult(result, player, radius);
+            }
+        }
+    }
+
+    private void tellSingleResult(ProspectResult result, EntityPlayer player, int radius) {
         String oreName = result.itemStack.getUnlocalizedName() + ".name";
 
         String quantityMsg = getQuantityString(radius, result);
 
-        TFC_Core.sendInfoMessage(
-            player,
-            new ChatComponentTranslation(quantityMsg).appendText(" ")
-                .appendSibling(new ChatComponentTranslation(oreName)));
+        SkillRank rank = TFC_Core.getSkillStats(player)
+            .getSkillRank(Global.SKILL_PROSPECTING);
+
+        if (rank == Novice) {
+            TFC_Core.sendInfoMessage(
+                player,
+                new ChatComponentTranslation(quantityMsg).appendText(" ")
+                    .appendSibling(new ChatComponentTranslation(oreName)));
+        } else {
+            int approximateCount = getApproximateCount(result, rank);
+            TFC_Core.sendInfoMessage(
+                player,
+                new ChatComponentTranslation(quantityMsg).appendText(" (<" + approximateCount + ") ")
+                    .appendSibling(new ChatComponentTranslation(oreName)));
+        }
+    }
+
+    private static int getApproximateCount(ProspectResult result, SkillRank rank) {
+        float roundingFactor;
+        switch (rank) {
+            case Adept:
+                roundingFactor = 100.0f;
+                break;
+            case Expert:
+                roundingFactor = 50.0f;
+                break;
+            case Master:
+                roundingFactor = 20.0f;
+                break;
+            default:
+                roundingFactor = 250.0f;
+                break;
+        }
+
+        return (int) (MathHelper.ceiling_float_int(result.count / roundingFactor) * roundingFactor);
     }
 
     /*
