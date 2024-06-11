@@ -32,7 +32,7 @@ public class BlockOre2 extends BlockOre {
         if (meta == SALTPETER) {
             return 1 + random.nextInt(3);
         }
-        if (meta == GRAPHITE) {
+        if (meta == GRAPHITE || meta == KAOLINITE) {
             return 1 + random.nextInt(2);
         }
         return 1;
