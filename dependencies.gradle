@@ -34,8 +34,11 @@
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-    implementation "curse.maven:notenoughitems-gtnh-358228:4799391-deobf-sources-api"
-    implementation "curse.maven:codechickencore-unofficial-746279:4378043-deobf-sources-api"
-    implementation "curse.maven:codechickenlib-unofficial-746280:4388255-deobf-sources-api"
-    implementation "curse.maven:waila-73488:2230518-deobf-sources-api"
+    implementation("curse.maven:notenoughitems-gtnh-358228:4799391-deobf-sources-api")
+    implementation("curse.maven:codechickencore-unofficial-746279:4378043-deobf-sources-api")
+    implementation("curse.maven:codechickenlib-unofficial-746280:4388255-deobf-sources-api")
+    implementation("curse.maven:waila-73488:2230518-deobf-sources-api")
+    compileOnly("blusunrize:ImmersiveEngineering:0.7.7:deobf")
+//    compileOnly('com.github.GTNewHorizons:Railcraft:9.15.8:api') {transitive = false}
+//    implementation('com.github.GTNewHorizons:Railcraft:9.15.8:dev') {transitive = false}
 }

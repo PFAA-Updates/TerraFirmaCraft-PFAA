@@ -1,9 +1,6 @@
 package com.bioxx.tfc.TileEntities;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import net.minecraft.block.Block;
@@ -30,6 +27,7 @@ import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Interfaces.ISmeltable;
 import com.bioxx.tfc.api.TileEntities.TEFireEntity;
 
+import blusunrize.immersiveengineering.common.items.ItemIEBase;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class TEBlastFurnace extends TEFireEntity implements IInventory {
@@ -52,7 +50,6 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
     public int slowCounter;
 
     // Bloomery
-    public int charcoalCount;
     public int oreCount;
 
     // private ItemStack outMetal1;
@@ -60,6 +57,9 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
 
     private int cookDelay;
     private int maxValidStackSize;
+    public ArrayList<Integer> fuelList;
+    private static final int FUEL_CHARCOAL = 0;
+    private static final int FUEL_COKE = 1;
 
     public TEBlastFurnace() {
         fuelTimeLeft = 0;
@@ -73,19 +73,19 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
         storage = new ItemStack[2];
         // numAirBlocks = 0;
         airFromBellows = 0;
-        charcoalCount = 0;
+        fuelList = new ArrayList<>();
         oreCount = 0;
         // shouldSendInitData = false;
     }
 
     public boolean canLight() {
         if (!worldObj.isRemote) {
-            if (this.charcoalCount < this.oreCount) return false;
+            if (this.fuelList.size() < this.oreCount) return false;
 
             // get the direction that the bloomery is facing so that we know
             // where the stack should be
             int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-            if (this.charcoalCount >= 4 && this.fireTemp == 0) {
+            if (this.fuelList.size() >= 4 && this.fireTemp == 0) {
                 fireTemp = 1;
                 worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta + 4, 0x2);
                 return true;
@@ -151,8 +151,10 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
                     }
                 }
 
+                if (fuelList.size() >= oreCount && !fuelList.isEmpty()) {
+                    fuelList.remove(fuelList.size() - 1);
+                }
                 oreCount--;
-                charcoalCount--;
                 cookDelay = 100; // Five seconds (20 tps) until the next piece of ore can be smelted
                 fireItemStacks[i] = null; // Delete cooked item
 
@@ -218,13 +220,13 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
         }
 
         // charcoal
-        if (this.charcoalCount > 0) {
+        if (!fuelList.isEmpty()) {
             entityitem = new EntityItem(
                 worldObj,
                 xCoord + f,
                 yCoord + f1,
                 zCoord + f2,
-                new ItemStack(TFCItems.coal, charcoalCount, 1));
+                new ItemStack(TFCItems.coal, fuelList.size(), 1));
             entityitem.motionX = (float) rand.nextGaussian() * f3;
             entityitem.motionY = (float) rand.nextGaussian() * f3 + 0.2F;
             entityitem.motionZ = (float) rand.nextGaussian() * f3;
@@ -266,11 +268,20 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
         if (fuelTimeLeft > 0) {
             float desiredTemp = handleTemp();
             handleTempFlux(desiredTemp);
-        } else if (fuelTimeLeft <= 0 && charcoalCount > 0 && (meta & 4) > 0) {
-            charcoalCount--;
+        } else if (fuelTimeLeft <= 0 && !fuelList.isEmpty() && (meta & 4) > 0) {
+            int fuelType = fuelList.get(fuelList.size() - 1);
+            fuelList.remove(fuelList.size() - 1);
 
-            fuelTimeLeft = 1875;
-            fuelBurnTemp = 1400;
+            switch (fuelType) {
+                case FUEL_CHARCOAL:
+                    fuelTimeLeft = 1875;
+                    fuelBurnTemp = 1400;
+                    break;
+                case FUEL_COKE:
+                    fuelTimeLeft = 3750;
+                    fuelBurnTemp = 2000;
+                    break;
+            }
         } else {
             if ((meta & 4) > 0) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta & 3, 3);
 
@@ -380,7 +391,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
     }
 
     public int getTotalCount() {
-        return charcoalCount + oreCount;
+        return fuelList.size() + oreCount;
     }
 
     private int moltenCount;
@@ -391,7 +402,6 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
             createTuyereBlock();
 
             if (oreCount < 0) oreCount = 0;
-            if (charcoalCount < 0) charcoalCount = 0;
 
             /* Create a list of all the items that are falling into the stack */
             List list = worldObj.getEntitiesWithinAABB(
@@ -418,27 +428,33 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
                  * Iterate through the list and check for charcoal, coke, and
                  * ore
                  */
-                for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-                    EntityItem entity = (EntityItem) iterator.next();
+                for (Object o : list) {
+                    EntityItem entity = (EntityItem) o;
                     ItemStack itemstack = entity.getEntityItem();
                     Item item = itemstack.getItem();
                     boolean isOre = TFC_Core.isOreIron(itemstack);
                     HeatRegistry manager = HeatRegistry.getInstance();
                     HeatIndex index = manager.findMatchingIndex(itemstack);
 
-                    if (item == TFCItems.coal && itemstack.getItemDamage() == 1 /*
-                                                                                 * ||
-                                                                                 * item == TFCItems.Coke
-                                                                                 */) {
+                    int fuelIndex = -1;
+                    if (item == TFCItems.coal && itemstack.getItemDamage() == 1) {
+                        fuelIndex = FUEL_CHARCOAL;
+                    } else if (item instanceof ItemIEBase && ((ItemIEBase) item).itemName.equals("material")
+                        && itemstack.getItemDamage() == 6) {
+                            fuelIndex = FUEL_COKE;
+                        }
+
+                    if (fuelIndex != -1) {
                         for (int c = 0; c < itemstack.stackSize; c++) {
-                            if (getTotalCount() < 40 && charcoalCount < (this.maxValidStackSize * 4)) {
-                                charcoalCount++;
+                            if (getTotalCount() < 40 && fuelList.size() < (this.maxValidStackSize * 4)) {
+                                fuelList.add(fuelIndex);
                                 itemstack.stackSize--;
                             }
                         }
 
                         if (itemstack.stackSize == 0) entity.setDead();
                     }
+
                     /*
                      * If the item that's been tossed in is a type of Ore and it
                      * can melt down into something then add the ore to the list
@@ -498,7 +514,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
      * @return Number of molten blocks
      */
     private int updateMoltenBlocks() {
-        int count = charcoalCount + oreCount;
+        int count = fuelList.size() + oreCount;
 
         int moltenCount = 0;
         if (count > 0 && count <= 8) {
@@ -572,7 +588,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
     }
 
     public int getCharcoalCountScaled(int l) {
-        return (this.charcoalCount * l) / 20;
+        return (this.fuelList.size() * l) / 20;
     }
 
     @Override
@@ -588,7 +604,14 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
     @Override
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setInteger("charcoalCount", charcoalCount);
+
+        int[] fuelArray = new int[fuelList.size()];
+        for (int i = 0; i < fuelArray.length; i++) {
+            fuelArray[i] = fuelList.get(i);
+        }
+        nbt.setIntArray("fuelList", fuelArray);
+        nbt.setInteger("charcoalCount", fuelList.size());
+
         nbt.setInteger("outMetal1Count", outMetal1Count);
         nbt.setByte("oreCount", (byte) oreCount);
         nbt.setInteger("maxValidStackSize", maxValidStackSize);
@@ -630,7 +653,9 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        charcoalCount = nbt.getInteger("charcoalCount");
+        for (int fuelIndex : nbt.getIntArray("fuelList")) {
+            fuelList.add(fuelIndex);
+        }
         outMetal1Count = nbt.getInteger("outMetal1Count");
         oreCount = nbt.getByte("oreCount");
         maxValidStackSize = nbt.getInteger("maxValidStackSize");

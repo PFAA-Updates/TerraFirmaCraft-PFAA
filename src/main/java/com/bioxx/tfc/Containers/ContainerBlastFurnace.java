@@ -84,7 +84,7 @@ public class ContainerBlastFurnace extends ContainerTFC {
             }
         }
 
-        if (orecount != this.tileentity.oreCount || coalcount != this.tileentity.charcoalCount
+        if (orecount != this.tileentity.oreCount || coalcount != this.tileentity.fuelList.size()
             || updatecounter == 1000) {
             // tileentity.broadcastPacketInRange(tileentity.createUpdatePacket());
             tileentity.getWorldObj()
@@ -92,7 +92,7 @@ public class ContainerBlastFurnace extends ContainerTFC {
             updatecounter = 0;
         }
         orecount = this.tileentity.oreCount;
-        coalcount = this.tileentity.charcoalCount;
+        coalcount = this.tileentity.fuelList.size();
         firetemp = this.tileentity.fireTemp;
         updatecounter += 1;
     }
