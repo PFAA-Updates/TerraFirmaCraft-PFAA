@@ -22,6 +22,7 @@ import com.bioxx.tfc.Blocks.Devices.BlockBlastFurnace;
 import com.bioxx.tfc.Core.Metal.MetalRegistry;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.GUI.GuiBlastFurnace;
+import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.api.*;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Interfaces.ISmeltable;
@@ -439,7 +440,8 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
                     int fuelIndex = -1;
                     if (item == TFCItems.coal && itemstack.getItemDamage() == 1) {
                         fuelIndex = FUEL_CHARCOAL;
-                    } else if (item instanceof ItemIEBase && ((ItemIEBase) item).itemName.equals("material")
+                    } else if (TerraFirmaCraft.IMMERSIVE_ENGINEERING_LOADED && item instanceof ItemIEBase
+                        && ((ItemIEBase) item).itemName.equals("material")
                         && itemstack.getItemDamage() == 6) {
                             fuelIndex = FUEL_COKE;
                         }

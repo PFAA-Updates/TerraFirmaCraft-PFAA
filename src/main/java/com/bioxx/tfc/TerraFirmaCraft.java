@@ -29,6 +29,7 @@ import com.bioxx.tfc.api.TFCOptions;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -60,6 +61,8 @@ public class TerraFirmaCraft {
     public static final PacketPipeline PACKET_PIPELINE = new PacketPipeline();
 
     public TerraFirmaCraft() {}
+
+    public static boolean IMMERSIVE_ENGINEERING_LOADED = false;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -226,6 +229,8 @@ public class TerraFirmaCraft {
         // WAILA stuff
         proxy.registerWailaClasses();
         proxy.hideNEIItems();
+
+        if (Loader.isModLoaded("ImmersiveEngineering")) IMMERSIVE_ENGINEERING_LOADED = true;
     }
 
     @EventHandler
