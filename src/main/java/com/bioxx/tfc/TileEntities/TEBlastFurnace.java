@@ -83,7 +83,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
         if (!worldObj.isRemote) {
             // Old check needed as much fuel as ore
             // Removed due to it not always being necessary
-            //if (this.fuelList.size() < this.oreCount) return false;
+            // if (this.fuelList.size() < this.oreCount) return false;
 
             // get the direction that the bloomery is facing so that we know
             // where the stack should be
