@@ -81,13 +81,16 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
 
     public boolean canLight() {
         if (!worldObj.isRemote) {
-            if (this.fuelList.size() < this.oreCount) return false;
+            // Old check needed as much fuel as ore
+            // Removed due to it not always being necessary
+            //if (this.fuelList.size() < this.oreCount) return false;
 
             // get the direction that the bloomery is facing so that we know
             // where the stack should be
-            int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-            if (this.fuelList.size() >= 4 && this.fireTemp == 0) {
+            if (!this.fuelList.isEmpty() && this.fireTemp == 0) {
                 fireTemp = 1;
+
+                int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
                 worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta + 4, 0x2);
                 return true;
             }
@@ -158,6 +161,11 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
                 oreCount--;
                 cookDelay = 100; // Five seconds (20 tps) until the next piece of ore can be smelted
                 fireItemStacks[i] = null; // Delete cooked item
+
+                // Stop excessive burn time when all fuel is burned and no more ore is left to process
+                if (fuelList.isEmpty() && oreCount == 0 && fuelTimeLeft > 20) {
+                    fuelTimeLeft = 20;
+                }
 
                 /*
                  * Treat fireItemStacks as a queue, and shift everything forward when an item is melted.
@@ -405,7 +413,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
             if (oreCount < 0) oreCount = 0;
 
             /* Create a list of all the items that are falling into the stack */
-            List list = worldObj.getEntitiesWithinAABB(
+            List itemsInChimney = worldObj.getEntitiesWithinAABB(
                 EntityItem.class,
                 AxisAlignedBB
                     .getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + moltenCount + 1.1, zCoord + 1));
@@ -421,7 +429,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
              * Make sure the list isn't null or empty and that the stack is
              * valid 1 layer above the Molten Ore
              */
-            if (list != null && !list.isEmpty()
+            if (itemsInChimney != null && !itemsInChimney.isEmpty()
                 && ((BlockBlastFurnace) TFCBlocks.blastFurnace)
                     .checkStackAt(worldObj, xCoord, yCoord + moltenCount, zCoord)
                 && (playerList == null || playerList.isEmpty())) {
@@ -429,7 +437,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
                  * Iterate through the list and check for charcoal, coke, and
                  * ore
                  */
-                for (Object o : list) {
+                for (Object o : itemsInChimney) {
                     EntityItem entity = (EntityItem) o;
                     ItemStack itemstack = entity.getEntityItem();
                     Item item = itemstack.getItem();
