@@ -16,7 +16,7 @@ public class GuiBlastFurnace extends GuiContainerTFC {
         Reference.MOD_ID,
         Reference.ASSET_PATH_GUI + "gui_blastfurnace.png");
 
-    private TEBlastFurnace blastFurnaceTE;
+    private final TEBlastFurnace blastFurnaceTE;
 
     public GuiBlastFurnace(InventoryPlayer inventoryplayer, TEBlastFurnace te, World world, int x, int y, int z) {
         super(new ContainerBlastFurnace(inventoryplayer, te, world, x, y, z), 176, 85);
@@ -30,7 +30,7 @@ public class GuiBlastFurnace extends GuiContainerTFC {
 
     @Override
     protected void drawForeground(int guiLeft, int guiTop) {
-        int scale = 0;
+        int scale;
 
         scale = blastFurnaceTE.getTemperatureScaled(49);
         drawTexturedModalRect(guiLeft + 8, guiTop + 65 - scale, 185, 31, 15, 6);

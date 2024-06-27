@@ -155,17 +155,20 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
                     }
                 }
 
-                if (fuelList.size() >= oreCount && !fuelList.isEmpty()) {
-                    fuelList.remove(fuelList.size() - 1);
-                }
                 oreCount--;
-                cookDelay = 100; // Five seconds (20 tps) until the next piece of ore can be smelted
-                fireItemStacks[i] = null; // Delete cooked item
-
+                if (!fuelList.isEmpty()) {
+                    if (oreCount == 0) { // Remove excess fuel
+                        fuelList.clear();
+                    } else if (fuelList.size() > oreCount) { // Remove one fuel for each ore processed
+                        fuelList.remove(fuelList.size() - 1);
+                    }
+                }
                 // Stop excessive burn time when all fuel is burned and no more ore is left to process
-                if (fuelList.isEmpty() && oreCount == 0 && fuelTimeLeft > 20) {
+                if (oreCount == 0 && fuelTimeLeft > 20) {
                     fuelTimeLeft = 20;
                 }
+                cookDelay = 100; // Five seconds (20 tps) until the next piece of ore can be smelted
+                fireItemStacks[i] = null; // Delete cooked item
 
                 /*
                  * Treat fireItemStacks as a queue, and shift everything forward when an item is melted.
@@ -663,6 +666,7 @@ public class TEBlastFurnace extends TEFireEntity implements IInventory {
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
+        fuelList.clear();
         for (int fuelIndex : nbt.getIntArray("fuelList")) {
             fuelList.add(fuelIndex);
         }
