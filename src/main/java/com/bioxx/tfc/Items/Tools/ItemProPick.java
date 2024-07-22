@@ -23,7 +23,6 @@ import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_Textures;
 import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.Reference;
-import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.TileEntities.TEOre;
 import com.bioxx.tfc.WorldGen.Generators.OreSpawnData;
 import com.bioxx.tfc.WorldGen.Generators.WorldGenOre;
@@ -183,7 +182,7 @@ public class ItemProPick extends ItemTerra {
             // Check all blocks in a radius centered on the targeted block.
             int radius = getProspectingRadius(itemStack);
             int radiusSquared = radius * radius;
-            TerraFirmaCraft.LOG.info("Prospecting radius: {}", radius);
+            // TerraFirmaCraft.LOG.info("Prospecting radius: {}", radius);
             for (int i = -radius; i <= radius; i++) {
                 for (int j = -radius; j <= radius; j++) {
                     for (int k = -radius; k <= radius; k++) {

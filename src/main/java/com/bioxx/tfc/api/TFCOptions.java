@@ -23,6 +23,8 @@ public class TFCOptions {
     public static boolean enableSolidDetailed = true;
     public static int maxRemovedSolidDetailed = 12;
     public static boolean enableToolModeIndicator = true;
+    public static float foodUseMultiplier = 1.0f;
+    public static float waterUseMultiplier = 1.0f;
 
     // Time
     public static int yearLength = 96;

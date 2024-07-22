@@ -577,6 +577,22 @@ public class TFC_ConfigFiles {
             enableToolModeIndicator,
             "Set to false to hide the tool mode indicator that is displayed next to the hotbar for tools such as chisels and hoes.",
             "config.gui.TFCConfig.general.enableToolModeIndicator");
+        foodUseMultiplier = generalConfig.getFloat(
+            "foodUseMultiplier",
+            GENERAL,
+            foodUseMultiplier,
+            0.0f,
+            1000.0f,
+            "A positive float to represent a multiplier to base food bar consumption.",
+            "config.gui.TFCConfig.general.foodUseMultiplier");
+        waterUseMultiplier = generalConfig.getFloat(
+            "foodUseMultiplier",
+            GENERAL,
+            waterUseMultiplier,
+            0.0f,
+            1000.0f,
+            "A positive float to represent a multiplier to base water bar consumption.",
+            "config.gui.TFCConfig.general.waterUseMultiplier");
 
         generalConfig.setCategoryLanguageKey(TIME, "config.gui.TFCConfig.time");
 

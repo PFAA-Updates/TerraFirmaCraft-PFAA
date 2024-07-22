@@ -1,5 +1,7 @@
 package com.bioxx.tfc.Core.Player;
 
+import static com.bioxx.tfc.api.TFCOptions.waterUseMultiplier;
+
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
@@ -101,14 +103,14 @@ public class FoodStatsTFC {
             if (TFC_Time.getTotalTicks() - this.foodTimer >= TFC_Time.HOUR_LENGTH && !player.capabilities.isCreativeMode
                 && updateStats) {
                 this.foodTimer += TFC_Time.HOUR_LENGTH;
-                float drainMult = 1.0f;
+                float drainMult = TFCOptions.foodUseMultiplier;
                 if (player.isPlayerSleeping()) {
-                    drainMult = 0.50f;
+                    drainMult *= 0.50f;
                 }
                 // Water
-                if (player.isSprinting()) waterLevel -= 5 + (tempWaterMod);
+                if (player.isSprinting()) waterLevel -= waterUseMultiplier * (5 + tempWaterMod);
                 if (!player.capabilities.isCreativeMode && updateStats)
-                    waterLevel -= bodyTemp.getExtraWater() * drainMult;
+                    waterLevel -= waterUseMultiplier * bodyTemp.getExtraWater() * drainMult;
 
                 // Food
                 float hunger = (1 + foodExhaustionLevel + bodyTemp.getExtraFood()) * drainMult;
@@ -132,9 +134,9 @@ public class FoodStatsTFC {
                 }
 
                 if (this.stomachLevel <= 0) {
-                    reduceNutrition(0.0024F);// 3x penalty for starving
+                    reduceNutrition(0.0024F * TFCOptions.foodUseMultiplier);// 3x penalty for starving
                 } else if (this.satisfaction <= 0) {
-                    reduceNutrition(0.0008F);
+                    reduceNutrition(0.0008F * TFCOptions.foodUseMultiplier);
                 } else {
                     if (this.satProtein) this
                         .addNutrition(EnumFoodGroup.Protein, this.satisfaction * ((1 - this.nutrProtein) / 100), false);
