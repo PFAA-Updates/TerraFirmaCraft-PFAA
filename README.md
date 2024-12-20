@@ -1,6 +1,13 @@
 TerraFirmaCraft
 =======
 
+***This project is the old, 1.7.10 TFC. It's not going to get any content updates.
+Existing bugs might be fixed, but no guaranties. Consider this project deprecated.***
+
+[For active development, check out the 1.12+ version.](https://github.com/TerraFirmaCraft/TerraFirmaCraft)
+
+---
+
 ## Table of Contents
 
 * [About](#about)
@@ -33,7 +40,7 @@ This mod is licensed under [GNU GPL v3](https://github.com/Deadrik/TFCraft/blob/
 ## Downloads
 
 Downloads can be found on the [official website](http://terrafirmacraft.com/download.html).
- 
+
 ## Installation
 
 *[Wiki Installation Guide](http://terrafirmacraft.com/wiki/Installation)*
@@ -59,7 +66,7 @@ Here are a few tips that will increase the chances of your PR being merged.
 * The changes should be well documented in the code. When in doubt, add a comment with an explanation. The easier it is for us to scan through the differences and understand what was changed, the more likely the PR will be merged.
 * Extensively and excessively test your changes before submitting a PR. At the bare minimum you need to load both the client and the server in the development environment, as well as compile a release to test the client and the server outside of a development environment. Do your best to use and abuse the altered system in ways the standard player may not think about.
 * Squash commits for a cleaner revision history when the PR is merged. If you have made so many changes that you require multiple commits to keep everything clean and separate, you probably should have instead split the changes into multiple PRs.
- 
+
 ## TerraFirmaCraft API
 
 The current policy for development of the API is that changes are only made at the request of addon authors who would like improved compatibility. It isn't possible for us to think of all the different things and addon would like to implement, so if you feel that the API is lacking a specific functionality, please let us know.
@@ -73,3 +80,7 @@ The only *official* localization files of TFC are `en_US`, `en_GB`, and `en_CA`.
 ## Credits
 
 A list of developers and other primary contributors can be found on the [official website](http://terrafirmacraft.com/credits.html).
+
+Fork credits:
+- Porting to newer build routine: quentin452
+- Mod development and programming: xenten9
