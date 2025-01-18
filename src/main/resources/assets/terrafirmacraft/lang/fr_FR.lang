@@ -512,7 +512,7 @@ item.dyePowder.orange.name=Teinture orange
 item.dyePowder.pink.name=Teinture rose
 item.dyePowder.purple.name=Teinture mauve
 item.dyePowder.red.name=Teinture rouge
-item.dyePowder.silver.name=Teinture gris pâle
+item.dyePowder.lightGray.name=Teinture gris pâle
 item.dyePowder.white.name=Poudre d'os
 item.dyePowder.yellow.name=Teinture jaune
 

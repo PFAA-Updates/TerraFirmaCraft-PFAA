@@ -5,7 +5,7 @@
 #= Powders =
 #===========
 item.dyePowder.gray.name=Grey Dye
-item.dyePowder.silver.name=Light Grey Dye
+item.dyePowder.lightGray.name=Light Grey Dye
 
 item.Powder.Sulfur Powder.name=Sulphur Powder
 

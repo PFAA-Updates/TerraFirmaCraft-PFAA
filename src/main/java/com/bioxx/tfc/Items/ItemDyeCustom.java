@@ -27,6 +27,8 @@ public class ItemDyeCustom extends ItemTerra {
 
     /** List of dye color names */
     public static final String[] DYE_COLOR_NAMES = new String[] { "black", "red", "green", "brown", "blue", "purple",
+        "cyan", "lightGray", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white" };
+    public static final String[] DYE_COLOR_ICONS = new String[] { "black", "red", "green", "brown", "blue", "purple",
         "cyan", "silver", "gray", "pink", "lime", "yellow", "light_blue", "magenta", "orange", "white" };
     public static final int[] DYE_COLORS = new int[] { 1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799,
         2651799, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320 };
@@ -67,7 +69,7 @@ public class ItemDyeCustom extends ItemTerra {
         this.icons = new IIcon[DYE_COLOR_NAMES.length];
 
         for (int i = 0; i < DYE_COLOR_NAMES.length; ++i) {
-            this.icons[i] = par1IconRegister.registerIcon(this.getIconString() + "_" + DYE_COLOR_NAMES[i]);
+            this.icons[i] = par1IconRegister.registerIcon(this.getIconString() + "_" + DYE_COLOR_ICONS[i]);
         }
     }
 
